@@ -1,0 +1,86 @@
+.dashboard-body {
+    height: 400px;
+    padding: 10px;
+}
+
+.body-title {
+    margin: 0px;
+    padding: 5px 0px;
+}
+
+.sub-heading{
+    margin:15px 0px 10px 0px ;
+    padding: 0px;
+}
+/* Summary Cards */
+.summary-cards{
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 20px;
+}
+.summary-card-icon-img{
+    height: 30px;
+    padding: 10px;
+    background-color:#e6e0f9;
+    border-radius: 30px;
+}
+.summary-card{
+    display: flex;
+    gap: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 2px gray;
+    padding: 10px;
+    border-radius: 10px;
+}
+.summary-card-info{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.summary-card-detail{
+    font-size: 14px;
+}
+.summary-card-quantity{
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+/* Recent Application */
+
+.recentApplication-company-logo{
+    padding: 10px;
+    background-color: #7e5ffd;
+    border-radius: 30px;
+    color: white;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    font-weight: bolder;
+}
+.recent-applications{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px;
+    gap: 5px;
+}
+.recent-application-card{
+    display: flex;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    padding: 10px 20px;
+    box-shadow: 0px 0px 2px gray;
+border-radius: 10px;
+}
+.recentApplication-company-role{
+    font-weight: bold;
+    font-size: large;
+}
+.recentApplication-company-name{
+    font-size: 14px;
+    color: rgb(53, 52, 52);
+}
+.recentApplication-date{
+    font-weight: bold;
+}

@@ -1,0 +1,145 @@
+body {
+    background-color: #F7F8F7;
+}
+
+.layouts {
+    display: flex;
+    gap: 10px;
+}
+
+/* Side Navbar */
+.sideNavbar {
+    height: 100%;
+    width: 200px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 2px gray;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 10px;
+}
+
+.trackHire-logo {
+    height: 100px;
+    width: 160px;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* gap: 20px; */
+}
+
+
+.sidebar-navItems {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    justify-content: center;
+}
+
+.sidebar-navItem {
+    border-radius: 10px;
+    color: black;
+    text-decoration: none;
+    display: flex;
+    padding: 5px;
+    gap: 10px;
+}
+
+.sidebar-navItem:hover {
+    background-color: #7e5ffd;
+    color: white;
+}
+
+.sidebar-navItem {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-icon {
+    height: 25px;
+    width: 30px;
+}
+
+.paste-email-card {
+    background-color: #e6e0f9;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.paste-email-title {
+    padding: 0px;
+    margin: 2px;
+    text-align: justify;
+}
+
+.paste-email-subLine {
+    color: rgb(66, 65, 65);
+    font-size: 15px;
+}
+
+.paste-email-button {
+    display: block;
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid #7e5ffd;
+    margin: 20px 0px 10px 0px;
+    display: flex;
+    justify-content: center;
+    background-color: #FFFFFF;
+    gap: 7px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.paste-email-button:hover {
+    background-color: #7e5ffd;
+    color: #FFFFFF;
+
+}
+
+.email-plus-sign {
+    font-weight: bold;
+}
+
+/* Top Navbar */
+.topNavbar {
+    background-color: #FFFFFF;
+    height: 70px;
+    display: flex;
+    justify-content: end;
+    box-shadow: 0px 0px 2px gray;
+    align-items: center;
+    padding: 3px 30px;
+}
+
+.profile-img {
+    height: 50px;
+    border-radius: 30px;
+}
+
+.right-topNavbar {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.notification-icon {
+    height: 25px;
+}
+.profile-info{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.profile-user-name{
+    font-weight: bold;
+}
+.right-body{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}

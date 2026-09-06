@@ -1,0 +1,27 @@
+.form-subheading {
+    margin: 5px 0px;
+}
+
+
+.application-form {
+    display: grid;
+   grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+    background-color: #FFFFFF;
+    padding: 20px;
+    box-shadow: 0px 0px 2px gray;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.form-subsection{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+   
+.form-input{
+    padding: 10px;
+    border: 1px solid rgb(177, 173, 173);
+    border-radius: 10px;
+}
