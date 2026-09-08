@@ -26,7 +26,7 @@ function SideNavbar() {
             </div>
             <div className="sidebar-navItems">
                 <SidebarItems to='dashboard'  name="Dashboard" icon={dashboardIcon} />
-                <SidebarItems to='dashboard'  name="Applications" icon={applicationIcon} />
+                <SidebarItems to='application'  name="Applications" icon={applicationIcon} />
                 <SidebarItems to='addApplication'  name="Add Application" icon={addIcon} />
                 <SidebarItems to='dashboard'  name="Reminders" icon={reminderIcon} />
                 <SidebarItems to='dashboard'  name="Analytics" icon={analyticsIcon} />
