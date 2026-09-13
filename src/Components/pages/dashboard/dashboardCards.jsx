@@ -15,17 +15,14 @@ function SummaryCard({ icon, title, quantity, detail }) {
     </div>)
 }
 
-function RecentApplicationCard({ logoLetter, role, companyName, stage, date }) {
+function RecentApplicationCard({ role, company, date,key }) {
     return (
-        <div className="recent-application-card">
-            <div className="recentApplication-company-logo">{logoLetter}</div>
+        <div className="recent-application-card" key={key}>
             <div className="recentApplication-company-details">
                 <div className="recentApplication-company-role">{role}</div>
-                <div className="recentApplication-company-name">{companyName}</div>
+                <div className="recentApplication-company-name">{company}</div>
             </div>
-            <div className="recentApplication-stage">{stage}</div>
             <div className="recentApplication-dateDetails">
-                <div className="recentApplication-stageDetail">{stage}</div>
                 <div className="recentApplication-date">{date}</div>
             </div>
         </div>

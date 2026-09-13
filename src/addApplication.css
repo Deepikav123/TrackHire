@@ -3,9 +3,9 @@
 }
 
 
-.application-form {
+.application-details-form {
     display: grid;
-   grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     background-color: #FFFFFF;
     padding: 20px;
@@ -14,14 +14,106 @@
     margin: 20px;
 }
 
-.form-subsection{
+.form-subsection {
     display: flex;
     flex-direction: column;
     gap: 3px;
 }
-   
-.form-input{
+
+.form-input {
     padding: 10px;
     border: 1px solid rgb(177, 173, 173);
     border-radius: 10px;
+}
+
+.addApplication-section {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+/* Recruitment Pipeline */
+.recruitment-pipeline-title-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-stage {
+    margin: 0px 20px;
+    border: 1px solid #7e5ffd;
+    padding: 10px;
+    font-weight: bold;
+    color: #7e5ffd;
+    background-color: #FFFFFF;
+}
+.add-stage:hover{
+    background-color: #7e5ffd;
+   color: #FFFFFF;
+}
+
+.recruitmentPipeline-details-form {
+    margin: 20px 0px;
+
+}
+
+.recruitment-headings {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 20px 0px;
+    font-weight: bold;
+}
+
+.recruitmentPipeline-details-form {
+    background-color: #FFFFFF;
+    margin: 20px;
+    box-shadow: 0px 0px 2px gray;
+    border-radius: 10px;
+    padding: 20px;
+
+}
+
+.recruitment-form-detail {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    box-shadow: 0px 0px 2px gray;
+    border-radius: 10px;
+    padding: 10px;
+    align-items: center;
+
+}
+.recruitment-form-details{
+display: flex;
+gap: 10px;
+flex-direction: column;
+}
+
+.recruitment-status,
+.recruitment-date {
+    width: 100px;
+    padding: 6px;
+}
+.recruitment-stage-delete{
+    width: 90px;
+    padding: 6px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.recruitment-pipeline-buttons{
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 20px;
+}
+
+.application-cancel-button{
+padding: 10px;
+}
+.application-save-button{
+padding: 10px;
+   background-color: #7e5ffd;
+   color: #FFFFFF;
+   border: none;
+   font-weight: bold;
 }

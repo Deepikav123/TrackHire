@@ -31,11 +31,27 @@ function FormInputTextarea({ subheading, placeholder,onChange,value}) {
         </div>
     )
 }
-function FormInputButton({text}){
+function FormInputButton({text,ButtonClassName}){
     return (
-        <div className="form-subsection">
-            <button  className="form-input">{text}</button>
+            <button  className={ButtonClassName}>{text}</button>
+    )
+}
+
+function RecruitmentPipeline({stage,optionArray}){
+    return(
+        <div className="recruitment-form-detail">
+            <div className="recruitment-stage">{stage}</div>
+            <select className="recruitment-status">
+                {optionArray.map((opt)=>(
+                    <option value={opt}>{opt}</option>
+                ))}
+            </select>
+            <input type="date" className="recruitment-date" />
+            <button className="recruitment-stage-delete">
+                Delete
+            </button>
         </div>
     )
 }
-export { FormInputText, FormInputSelect ,FormInputTextarea,FormInputButton}
+
+export { FormInputText, FormInputSelect ,FormInputTextarea,FormInputButton,RecruitmentPipeline}
