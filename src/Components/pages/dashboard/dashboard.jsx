@@ -8,18 +8,34 @@ function Dashboard() {
 
     const [summary, setSummary] = useState(
         {
-            total: 0
+            total: 0,
+            inProgress:0
         }
     )
 
+    function inProgressCount(){
+        const progressCount=applications.filter(application=>(
+            application.stage.status!='selected' && application.stage.status!='failed'
+        ))
+        setSummary(
+             Prev=>({
+            ...Prev,
+            inProgress:progressCount.length
+    }))
+    }
     useEffect(() => {
         async function fetchApplication() {
             const response = await fetch('http://localhost:3000/api/applications')
             const data = await response.json();
             setApplications(data);
+            console.log(data);
+             const progressCount=data.filter(application=>(
+            application.stage[application.stage.length-1].status!='selected' && application.stage[application.stage.length-1].status=='failed'
+        ))
             setSummary(prev => ({
                 ...prev,
-                total: data.length
+                total: data.length,
+                inProgress:progressCount.length
             }
             ))
         }

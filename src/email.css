@@ -45,3 +45,65 @@ font-weight: bold;
     background-color:  #7e5ffd;
     
 }
+
+/* Overlay */
+.overlay{
+    position: fixed;
+    background: rgba(0,0,0,0.4);
+    z-index: 1000;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset:0
+}
+.modal{
+    width: 500px;
+    padding: 20px;
+    background-color: white;
+    margin: 100px auto;
+    
+
+}
+.modal-heading{
+display: flex;
+    gap: 20px;
+}
+.modal-close{
+border: none;
+background-color: white;
+color: red;
+cursor: pointer;
+font-weight: bold;
+}
+
+.modal-body{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    padding: 20px;
+}
+/* Modal Buttons */
+.modal-buttons{
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+.modal-button{
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+
+}
+.modal-cancel{
+    color: white;
+    background-color: red;
+}
+.modal-confirm{
+    color: white;
+     background-color:  #7e5ffd;
+
+}
