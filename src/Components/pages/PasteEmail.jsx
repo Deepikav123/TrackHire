@@ -6,7 +6,7 @@ import { useState } from "react";
 function ModalInputText({ subheading, value, onChange }) {
     return (<div className="modal-form-subsection">
         <h4 className="modal-form-subheading">{subheading}</h4>
-        <input className="modal-form-input" value={value} onChange={onChange} />
+        <input type="text" className="modal-form-input" value={value} onChange={onChange} />
     </div>)
 }
 
@@ -30,6 +30,7 @@ function PasteEmail() {
                 status:""
             },
             applicationDate: "",
+            jobtype:"",
             location: ""
         }
     )
@@ -51,9 +52,10 @@ function PasteEmail() {
         console.log(data);
         setExtractedData({
             company: data.company,
-            role: "",
+            role:data.role,
             applicationDate: data.date,
             location: "",
+            jobtype:data.jobtype,
             stage: {
                 name:data.stage,
                 status:"upcoming"
@@ -153,7 +155,9 @@ function PasteEmail() {
                                             return {
                                                 ...Prev,
                                                 stage:{
-                                                    name:e.target.value
+                            
+                                                    name:e.target.value,
+                                                    status:"upcoming"
                                                 }
                                             }
                                         }
@@ -171,6 +175,16 @@ function PasteEmail() {
                                     )
                                 }} />
 
+                                <ModalInputText subheading="Job Type" value={extractedData.jobtype} onChange={(e) => {
+                                    setExtractedData(
+                                        Prev => {
+                                            return {
+                                                ...Prev,
+                                                jobtype: e.target.value
+                                            }
+                                        }
+                                    )
+                                }} />
                                 <ModalInputText subheading="Location(if available)" value={extractedData.location} onChange={(e) => {
                                     setExtractedData(
                                         Prev => {

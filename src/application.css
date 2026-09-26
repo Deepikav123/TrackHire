@@ -1,23 +1,29 @@
-.application-cards-section{
+/* .application-cards-section{
     display: flex;
     flex-direction: column;
     margin: 20px 0px;
     gap: 10px;
-}
-.application-cards-title{
+} */
+/* .application-cards-title{
     font-weight: bold;
     
-}
+} */
 .application-card{
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(4,1fr);
     background-color: #FFFFFF;
     padding: 10px;
     box-shadow: 0px 0px 2px gray;
 border-radius: 10px;
+align-items: center;
+gap:15px;
+
 }
 .application-cards-section{
-    padding: 20px;
+    margin: 15px 0px;
+    display: flex;
+   
+    gap: 10px;
 }
 /* .application-cards-title{
     background-color: #FFFFFF;
@@ -29,4 +35,47 @@ border-radius: 10px;
     display: flex;
     flex-direction: column;
     gap: 2px;
+}
+.application-role{
+    font-weight: bold;
+    font-size: large;
+}
+.application-companyName{
+    color: rgb(57, 56, 56);
+
+}
+.application-more{
+    font-size: x-large;
+    border: none;
+    background-color: #FFFFFF;
+    padding: 0px;
+    cursor: pointer;
+}
+.application-pipeline{
+    background-color: #FFFFFF;
+    padding: 10px;
+     box-shadow: 0px 0px 2px gray;
+border-radius: 10px;
+}
+
+/* Pipeline */
+.pipeline-companyTitle{
+    font-size: larger;
+    font-weight: bold;
+    margin: 10px 0px;
+}
+
+.pipeline-title{
+font-weight: bold;
+
+}
+
+.pipeline-section{
+    padding: 15px 0px;
+}
+.pipeline-stage{
+    display: flex;
+    gap: 10px;
+    padding: 10px 0px;
+    align-items: center;
 }
