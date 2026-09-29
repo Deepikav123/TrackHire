@@ -1,3 +1,15 @@
+
+ function formatDate(dateValue) {
+         if (!dateValue) {
+        return "";
+    }
+    const date = new Date(dateValue + "T00:00:00");
+
+    return new Intl.DateTimeFormat("en-US", {
+        day: "numeric",
+        month: "long"
+    }).format(date);
+}
 function SummaryCard({ icon, title, quantity, detail }) {
     return (<div className="summary-card">
         <img src={icon} alt="" className="summary-card-icon-img" />
@@ -25,7 +37,7 @@ function RecentApplicationCard({ role, company, date,stage,status,key }) {
 
                 <div className="recentApplication-stage">{stage}</div>
                 <div className="recentApplication-status">{status}</div>
-                <div className="recentApplication-date">{date}</div>
+                <div className="recentApplication-date">{formatDate(date)}</div>
         </div>
     )
 }

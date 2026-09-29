@@ -1,8 +1,16 @@
-function FormInputText({ subheading, type, placeholder,onChange,value }) {
+function FormInputText({ subheading, placeholder,onChange,value }) {
     return (
         <div className="form-subsection">
             <h4 className="form-subheading">{subheading}</h4>
-            <input type={type} className="form-input" placeholder={placeholder} value={value} onChange={onChange} />
+            <input type="text" className="form-input" placeholder={placeholder} value={value} onChange={onChange} />
+        </div>
+    )
+}
+function FormInputDate({ subheading, placeholder,onChange,value }) {
+    return (
+        <div className="form-subsection">
+            <h4 className="form-subheading">{subheading}</h4>
+            <input type="date" className="form-input" placeholder={placeholder} value={value} onChange={onChange} />
         </div>
     )
 }
@@ -54,4 +62,4 @@ function RecruitmentPipeline({stage,optionArray}){
     )
 }
 
-export { FormInputText, FormInputSelect ,FormInputTextarea,FormInputButton,RecruitmentPipeline}
+export { FormInputText,FormInputDate, FormInputSelect ,FormInputTextarea,FormInputButton,RecruitmentPipeline}

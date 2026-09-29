@@ -4,6 +4,8 @@ import applicationIcon from '../../../images/icons/application.png'
 import inProgressIcon from '../../../images/icons/inProgress.png'
 import { useEffect, useState } from "react";
 function Dashboard() {
+
+    
     const [applications, setApplications] = useState([]);
 
     const [summary, setSummary] = useState(
@@ -36,7 +38,7 @@ function Dashboard() {
             // Selected
             const offerCount = data.filter((application) => {
                 const lastStage = application.stage[application.stage.length - 1];
-                return lastStage && lastStage.name=='selected' && lastStage.status == 'selected'
+                return lastStage && lastStage.name=='selected' 
             })
             // Rejected
             const rejectCount = data.filter((application) => {

@@ -8,7 +8,9 @@ import Logo from '../../images/trackHire.png'
 import profileImage from '../../images/profile.jpg'
 import { Link,NavLink } from 'react-router-dom'
 function SidebarItems({to, name, icon }) {
-    return (<NavLink to={to} className="sidebar-navItem">
+    return (<NavLink to={to} className={({isActive})=>
+    isActive?"sidebar-navItem active":"sidebar-navItem"
+} >
         <img src={icon} className="sidebar-icon" />
         {name}
     </NavLink>
@@ -38,7 +40,8 @@ function SideNavbar() {
                 <span className="paste-email-subLine">
                     Paste any job update email content here
                 </span>
-                <Link to='pasteEmail' className='paste-email-button'><span className="email-plus-sign">+ </span>Paste Email </Link>
+                <NavLink to='pasteEmail' className={({isActive})=>
+    isActive?"paste-email-button active":"paste-email-button"} ><span className="email-plus-sign">+ </span>Paste Email </NavLink>
             </div>
         </div>
     )

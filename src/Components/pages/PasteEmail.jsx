@@ -35,6 +35,13 @@ function PasteEmail() {
         }
     )
 
+function capitalizeFirstLetter(word){
+   if(!word){
+    return "";
+   }
+   return word.charAt(0).toUpperCase()+word.slice(1);
+}
+
     async function analyzeEmail(e) {
         e.preventDefault();
         const response = await fetch('http://localhost:3000/api/email/analyze', {
@@ -51,14 +58,14 @@ function PasteEmail() {
         setModal(true);
         console.log(data);
         setExtractedData({
-            company: data.company,
-            role:data.role,
+            company: capitalizeFirstLetter(data.company),
+            role:capitalizeFirstLetter(data.role),
             applicationDate: data.date,
             location: "",
             jobtype:data.jobtype,
             stage: {
                 name:data.stage,
-                status:"upcoming"
+                status:data.stage=="Shortlisted" ||data.stage=="Selected"?"completed":data.stage=="Rejected"?"failed":"upcoming"
             }
         })
 

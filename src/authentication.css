@@ -1,0 +1,112 @@
+/* Left Section */
+.authentication-formalImage {
+    width: 250px;
+    border: none;
+}
+
+.authetication-page {
+    display: flex;
+}
+.authentication-left-section .authentication-logo {
+    color: white;
+
+}
+.authentication-left-section {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 15px;
+    background-color: #8266f3;
+    align-items: center;
+}
+
+.trackHire-text-info {
+    color: white;
+}
+
+.authentication-left-section {
+    flex: 2.5;
+}
+.authentication-right-section {
+    flex: 7.5;
+}
+.trackHire-text-info1{
+    margin: 7px 0px;
+    text-align: center;
+}
+.trackHire-text-info2{
+    text-align: center;
+}
+
+/* Right Section */
+.authentication-right-section{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+.auth-form-heading{
+    margin: 10px 0px;
+}
+.authentication-form-section{
+    margin: 20px 0px;
+}
+.authForm-subSection{
+    margin: 20px 0px;
+}
+.authForm-inputHeading{
+    margin: 10px 0px;
+    font-weight: bold;
+}
+.authForm-input{
+    width: 300px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+.forgot-password{
+    display: flex;
+    justify-content: end;
+    color: rgb(59, 58, 58);
+
+}
+.forgot-password:hover{
+    color: black;
+    cursor: pointer;
+}
+.authentication-form-buttons{
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-button{
+flex: 1;
+padding: 8px;
+border: none;
+border-radius: 10px;
+font-weight: bold;
+
+}
+.auth-mode{
+        background-color: #8266f3;
+color: white;
+
+}
+.google{
+    border: 1px solid gray;
+
+}
+.auth-button-option{
+    text-align: center;
+    font-size: small;
+}
+.auth-suggestion{
+    color: rgb(72, 72, 181);
+    font-weight: bold;
+    cursor: pointer;
+}
+.auth-suggestion-section{
+    text-align: center;
+}

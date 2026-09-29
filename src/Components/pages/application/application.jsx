@@ -5,17 +5,21 @@ import { useEffect, useState } from 'react';
 
 function Application() {
     const [applications, setApplications] = useState([]);
-    const [selectedApplication,setSelectedApplication]=useState( null);
+    const [selectedApplication, setSelectedApplication] = useState(null);
     console.log(applications);
     useEffect(() => {
         async function fetchApplication() {
 
             const response = await fetch('http://localhost:3000/api/applications', {
-                method: "GET"
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer abc123"
+                }
+
             })
             const data = await response.json();
             setApplications(data);
-            setSelectedApplication(data[0]);
+            setSelectedApplication(data[data.length - 1]);
         }
         fetchApplication();
     }, [])
@@ -25,18 +29,15 @@ function Application() {
         const f = applications.filter((application) => (
             application._id == applicationId
         ))
-        if (f.length>0) {
+        if (f.length > 0) {
             setSelectedApplication(f[0]);
-            console.log(f[0].company);
 
         }
-        else {
-            console.log("No");
-        }
-       
+
+
     }
     function ApplicationCard({ applicationId, company, role, stage, date }) {
-        
+
         return (
             <div className="application-card" >
                 <div className="company-and-role">
@@ -44,7 +45,10 @@ function Application() {
                     <div className="application-companyName">{company}</div>
                 </div>
                 <div className="application-stage">{stage}</div>
-                <div className="application-date">{date}</div>
+                <div className="application-date">
+                    <div className="application-date-sideHeading">Applied On</div>
+                    <div className="application-date-data">{date}</div>
+                </div>
                 <button className="application-more" onClick={() => { activeApplication(applicationId) }} >...</button>
             </div>
         )
@@ -54,7 +58,7 @@ function Application() {
         return (
             <>
                 {stage.map(s => (
-                    <div className="pipeline-stage">
+                    <div className="pipeline-stage" >
                         <span className="indication-circle">{s.status == "completed" ? '🟢' : s.status == "upcoming" ? '🟡' : '🔴'}</span>
                         {/* <div className="stage-detail"> */}
                         <div className="stage-name" >
@@ -72,18 +76,18 @@ function Application() {
             <div className="application-cards-section">
 
                 <div className="application-cards-data">
-                    {applications.map((application) => (
-                        <ApplicationCard key={application._id} applicationId={application._id} company={application.company} role={application.role} stage={application.stage[0]?.name} date={application.applicationDate} />
+                    {applications.toReversed().map((application) => (
+                        <ApplicationCard key={application._id} applicationId={application._id} company={application.company} role={application.role} stage={application.stage[application.stage.length - 1]?.name} date={application.applicationDate} />
                     ))}
                 </div>
                 <div className="application-pipeline">
                     <div className="pipeline-companyTitle">
-                        {selectedApplication?`${selectedApplication.company}-${selectedApplication.role}`:""}
+                        {selectedApplication ? `${selectedApplication.company}-${selectedApplication.role}` : ""}
                         {/* Google-SWE Intern */}
                     </div>
                     <div className="pipeline-title">Application Pipeline</div>
                     <div className="pipeline-section">
-                        <PipelineStage stage={selectedApplication?selectedApplication.stage:[]} />
+                        <PipelineStage  stage={selectedApplication ? selectedApplication.stage : []} />
                     </div>
                 </div>
             </div>

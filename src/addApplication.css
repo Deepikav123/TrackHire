@@ -31,12 +31,7 @@
     flex-direction: column;
     gap: 7px;
 } */
- .application-cards-data{
-    flex: 6.5;
- }
- .application-pipeline{
-    flex: 3.5;
- }
+
 
 /* Recruitment Pipeline */
 .recruitment-pipeline-title-section {
