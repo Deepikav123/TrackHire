@@ -86,7 +86,7 @@ function capitalizeFirstLetter(word){
         )
         const data = await response.json();
         console.log(data);
-        navigate('/trackhire/application');
+        navigate('/trackhire/app/application');
     }
 
     return (
@@ -115,7 +115,7 @@ function capitalizeFirstLetter(word){
                 </div>
                 <div className="secure-message">🔒 Your email content is used only to extract application details.</div>
                 <div className="email-buttons">
-                    <Link to='/trackhire/dashboard' className="email-cancel-button email-button" >Cancel</Link>
+                    <Link to='/trackhire/app/dashboard' className="email-cancel-button email-button" >Cancel</Link>
                     <button className="email-analyze-button email-button" type="submit">Analyze Email</button>
                 </div>
 

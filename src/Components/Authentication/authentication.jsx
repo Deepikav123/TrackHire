@@ -2,10 +2,6 @@ import Logo from '../../images/trackHire.png'
 import Formal from '../../images/authentication.png'
 import { Outlet } from "react-router-dom"
 
-function RegisterButton(){
-    
-}
-
 function LeftSection() {
     return (
         <div className="authentication-left-section">

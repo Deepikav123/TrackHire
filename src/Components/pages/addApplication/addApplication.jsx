@@ -56,7 +56,7 @@ function AddApplication() {
             body: JSON.stringify(formData)
         })
         const data = await response.json();
-        navigate('/trackhire/application')
+        navigate('/trackhire/app/application')
 
     }
     return (
