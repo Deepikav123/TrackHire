@@ -1,7 +1,9 @@
-const applicationModel=require("../models/Application");
-async function getApplications(req, res){
- try {
-        const allApplications = await applicationModel.find();
+const authMiddleware = require("../middleware/authMiddleware")
+async function getApplications(req, res) {
+    try {
+        const allApplications = await applicationModel.find({
+            user:req.user.userId
+        });
         res.json(allApplications);
     }
     catch (err) {
@@ -12,11 +14,17 @@ async function getApplications(req, res){
     }
 }
 
-async function getApplication(req, res){
+async function getApplication(req, res) {
     try {
 
         const id = req.params.id;
-        const findApplication = await applicationModel.findById(id);
+        const findApplication = await applicationModel.findOne({
+            $and:[
+                {user:req.user.userId},
+                {_id:id}
+            ]
+            
+        });
         if (!findApplication) {
             return res.status(404).json(
                 { message: "Application not found" }
@@ -32,37 +40,30 @@ async function getApplication(req, res){
     }
 }
 
-async function createApplication(req, res){
- try {
+async function createApplication(req, res) {
+    try {
 
         const data = req.body;
-        let applicationFilter = await applicationModel.find({
+          const applicationData = {
+                ...data,
+                user: req.user.userId
+            }
+        let applicationFilter = await applicationModel.findOne({
             $and: [
-                { company: data.company },
-                { role: data.role }
+                {user:applicationData.user},
+                { company: applicationData.company },
+                { role: applicationData.role }
             ]
         })
-        const storeFilter = applicationFilter[0];
-        if (applicationFilter.length > 0) {
-            applicationFilter[0].stage[applicationFilter[0].stage.length - 1].status = "completed"
-            await storeFilter.save();
-
-            await applicationModel.updateOne(
-                {
-                    company: applicationFilter[0].company
-                },
-                {
-                    $push: {
-                        stage: data.stage
-                    }
-                }
-            )
-            const f = await applicationModel.find({ company: data.company });
-            res.json(applicationFilter[0])
+        if (applicationFilter) {
+            applicationFilter.stage[applicationFilter.stage.length - 1].status = "completed"
+            applicationFilter.stage.push(applicationData.stage);
+            await applicationFilter.save();
+            res.json(applicationFilter)
         }
         else {
-
-            const applicationCreation = await applicationModel.create(data);
+          
+            const applicationCreation = await applicationModel.create(applicationData);
 
             res.status(201).json(applicationCreation);
 
@@ -83,8 +84,8 @@ async function createApplication(req, res){
     }
 }
 
-async function updateApplication(req, res){
-  try {
+async function updateApplication(req, res) {
+    try {
         const id = req.params.id;
         const applicationUpdate = await applicationModel.findByIdAndUpdate(
             id,
@@ -116,7 +117,7 @@ async function updateApplication(req, res){
 }
 
 
-async function deleteApplication(req, res){
+async function deleteApplication(req, res) {
     try {
 
         const id = req.params.id;
@@ -137,4 +138,4 @@ async function deleteApplication(req, res){
         });
     }
 }
-module.exports= {getApplications,getApplication,createApplication,updateApplication,deleteApplication}
+module.exports = { getApplications, getApplication, createApplication, updateApplication, deleteApplication }

@@ -1,7 +1,14 @@
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const userModel=require("../models/User");
 async function register(req,res){
  try {
         const data = req.body;
+        if(data.password!=data.confirmPassword){
+            return res(400).json({
+                "Message":"Password Mismatched"
+            })
+        }
         const isExist = await userModel.findOne({
             email: data.email
         })
@@ -9,10 +16,12 @@ async function register(req,res){
             return res.status(409).json({ "Message": "User already exist" })
         }
         const hashedValue = await bcrypt.hash(data.password, 10);
+
         const user = {
             email: data.email,
             password: hashedValue
         }
+        console.log(userModel);
         await userModel.create(user);
         res.status(201).json({
             "Message": "Successfully created"

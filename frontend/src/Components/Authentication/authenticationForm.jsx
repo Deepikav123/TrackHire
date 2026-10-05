@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import { useNavigate } from "react-router-dom";
 function AuthFormInput({ subheading, type, placeholder, onChange, value, autoComplete }) {
     return (
         <div className="authForm-subSection">
@@ -12,7 +12,8 @@ function AuthFormInput({ subheading, type, placeholder, onChange, value, autoCom
 }
 
 function AuthForm({ mode, heading, subheading, buttonFunction }) {
-
+    const navigate=useNavigate();
+    
     const [authenticationData, setAuthenticationData] = useState({
         email: "",
         password: "",
@@ -21,13 +22,43 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
 
 
 
-    async function submitForm(e) {
+    async function submitRegisterForm(e) {
         e.preventDefault();
-        const loginFetch = await fetch("/")
+        const response = await fetch("http://localhost:3000/api/auth/register",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify(authenticationData)
+
+            }
+        )
+        const data=await response.json();
+        navigate('/trackhire/app/dashboard');
+
+        console.log(data);
+    }
+    async function submitLoginForm(e) {
+        e.preventDefault();
+        const response = await fetch("http://localhost:3000/api/auth/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify(authenticationData)
+            }
+        )
+        const data=await response.json();
+        
+        navigate('/trackhire/app/dashboard');
+        console.log("Yes");
+        console.log(data);
     }
 
     return (
-        <form className="auth-form" onSubmit={submitForm} >
+        <form className="auth-form" onSubmit={mode=="Register"?submitRegisterForm:submitLoginForm} >
             <div className="auth-form-headings">
                 <h1 className="auth-form-heading">
                     {heading}

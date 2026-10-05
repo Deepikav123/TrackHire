@@ -52,7 +52,12 @@ const applicationSchema = new mongoose.Schema(
             type: String,
             trim: true
         },
-        stage: [stageSchema]
+        stage: [stageSchema],
+        user:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Users",
+            required:true
+        }
     }
 )
 const applicationModel = mongoose.model("Applications", applicationSchema);
