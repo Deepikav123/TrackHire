@@ -1,7 +1,9 @@
 import { TitleAndSubline, SubHeading } from "./bodyTitle";
 import '../../email.css'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from "react";
+import { useContext } from "react";
+import AuthContext from "../../../context/authContext";
 
 function ModalInputText({ subheading, value, onChange }) {
     return (<div className="modal-form-subsection">
@@ -12,8 +14,9 @@ function ModalInputText({ subheading, value, onChange }) {
 
 
 function PasteEmail() {
+    const { token } = useContext(AuthContext);
 
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [email, setEmail] = useState({
         sender: "",
         body: ""
@@ -25,29 +28,30 @@ function PasteEmail() {
         {
             company: "",
             role: "",
-            stage:{
-                name:"",
-                status:""
+            stage: {
+                name: "",
+                status: ""
             },
             applicationDate: "",
-            jobtype:"",
+            jobtype: "",
             location: ""
         }
     )
 
-function capitalizeFirstLetter(word){
-   if(!word){
-    return "";
-   }
-   return word.charAt(0).toUpperCase()+word.slice(1);
-}
+    function capitalizeFirstLetter(word) {
+        if (!word) {
+            return "";
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }
 
     async function analyzeEmail(e) {
         e.preventDefault();
         const response = await fetch('http://localhost:3000/api/email/analyze', {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 "sender": email.sender,
@@ -59,13 +63,13 @@ function capitalizeFirstLetter(word){
         console.log(data);
         setExtractedData({
             company: capitalizeFirstLetter(data.company),
-            role:capitalizeFirstLetter(data.role),
+            role: capitalizeFirstLetter(data.role),
             applicationDate: data.date,
             location: "",
-            jobtype:data.jobtype,
+            jobtype: data.jobtype,
             stage: {
-                name:data.stage,
-                status:data.stage=="Shortlisted" ||data.stage=="Selected"?"completed":data.stage=="Rejected"?"failed":"upcoming"
+                name: data.stage,
+                status: data.stage == "Shortlisted" || data.stage == "Selected" ? "completed" : data.stage == "Rejected" ? "failed" : "upcoming"
             }
         })
 
@@ -78,7 +82,8 @@ function capitalizeFirstLetter(word){
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(extractedData)
 
@@ -161,10 +166,10 @@ function capitalizeFirstLetter(word){
                                         Prev => {
                                             return {
                                                 ...Prev,
-                                                stage:{
-                            
-                                                    name:e.target.value,
-                                                    status:"upcoming"
+                                                stage: {
+
+                                                    name: e.target.value,
+                                                    status: "upcoming"
                                                 }
                                             }
                                         }

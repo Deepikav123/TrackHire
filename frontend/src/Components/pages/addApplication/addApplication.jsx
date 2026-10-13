@@ -1,40 +1,44 @@
 import { TitleAndSubline, SubHeading } from "../bodyTitle";
-import { FormInputText,FormInputDate, FormInputSelect, FormInputTextarea, FormInputButton, RecruitmentPipeline } from "./formInput";
+import { FormInputText, FormInputDate, FormInputSelect, FormInputTextarea, FormInputButton, RecruitmentPipeline } from "./formInput";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../../../addApplication.css'
+import { useContext } from "react";
+import AuthContext from "../../../../context/authContext";
+
 function AddApplication() {
-    const navigate=useNavigate();
+    const { token } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     function formatDate(dateValue) {
-         if (!dateValue) {
-        return "";
-    }
-    const date = new Date(dateValue + "T00:00:00");
+        if (!dateValue) {
+            return "";
+        }
+        const date = new Date(dateValue + "T00:00:00");
 
-    return new Intl.DateTimeFormat("en-US", {
-        day: "numeric",
-        month: "long"
-    }).format(date);
-}
+        return new Intl.DateTimeFormat("en-US", {
+            day: "numeric",
+            month: "long"
+        }).format(date);
+    }
 
     const [formData, setFormData] = useState(
         {
             company: "",
             role: "",
-            stage:{
-                name:"",
-                status:"upcoming"
+            stage: {
+                name: "",
+                status: "upcoming"
             },
             jobtype: "",
             location: "",
-            applicationDate:"",
+            applicationDate: "",
             link: "",
             salary: "",
             notes: ""
         }
     )
-// const recruitmentStages=["Applied","Online Assessment","Technical Interview","HR Interview","Result"]
+    // const recruitmentStages=["Applied","Online Assessment","Technical Interview","HR Interview","Result"]
 
     function collectInput(fieldname) {
         return ((e) => {
@@ -51,7 +55,9 @@ function AddApplication() {
         const response = await fetch('http://localhost:3000/api/applications', {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+
             },
             body: JSON.stringify(formData)
         })
@@ -69,28 +75,28 @@ function AddApplication() {
                     <div className="application-details-form">
                         <FormInputText subheading="Company Name" type="text" placeholder="e.g.Microsoft" onChange={collectInput("company")} value={formData.company} />
                         <FormInputText subheading="Job Role" type="text" placeholder="e.g.Software Engineer" onChange={collectInput("role")} value={formData.role} />
-                        <FormInputText subheading="Stage" type="text" placeholder="e.g.Technical Interview" onChange={(e)=>{
+                        <FormInputText subheading="Stage" type="text" placeholder="e.g.Technical Interview" onChange={(e) => {
                             setFormData(
-                                Prev=>({
-                                   ...Prev,
-                                   stage:{
-                                    name:e.target.value,
-                                    status:e.target.value=="shortListed" ||e.target.value=="selected"?"completed":e.target.value=="rejected"?"failed":"upcoming"
-                                   }
+                                Prev => ({
+                                    ...Prev,
+                                    stage: {
+                                        name: e.target.value,
+                                        status: e.target.value == "shortListed" || e.target.value == "selected" ? "completed" : e.target.value == "rejected" ? "failed" : "upcoming"
+                                    }
 
                                 })
                             )
                         }} value={formData.stage.name} />
                         <FormInputSelect subheading="Job Type" optionArray={["Internship", "Part-Time", "Full-Time"]} onChange={collectInput("jobtype")} value={formData.jobtype} />
-                        <FormInputText subheading="Job Location"  placeholder="e.g.Bengaluru" onChange={collectInput("location")} value={formData.location} />
-                        <FormInputDate subheading="Application Date"  onChange={collectInput("applicationDate")} value={formData.applicationDate} />
-                        <FormInputText subheading="Job Link(Optional)"  placeholder="https://careers.company.com" onChange={collectInput("link")} value={formData.link} />
-                        <FormInputText subheading="Salary"  placeholder="e.g.12 LPA" onChange={collectInput("salary")} value={formData.salary} />
+                        <FormInputText subheading="Job Location" placeholder="e.g.Bengaluru" onChange={collectInput("location")} value={formData.location} />
+                        <FormInputDate subheading="Application Date" onChange={collectInput("applicationDate")} value={formData.applicationDate} />
+                        <FormInputText subheading="Job Link(Optional)" placeholder="https://careers.company.com" onChange={collectInput("link")} value={formData.link} />
+                        <FormInputText subheading="Salary" placeholder="e.g.12 LPA" onChange={collectInput("salary")} value={formData.salary} />
                         <FormInputTextarea subheading="Notes(Optional)" placeholder="Any additional information.." onChange={collectInput("notes")} value={formData.notes} />
                     </div>
                     <div className="recruitment-pipeline-buttons">
-                        <FormInputButton text="Cancel" ButtonClassName="application-cancel-button"/>
-                        <FormInputButton text="Save Application" ButtonClassName="application-save-button" type="submit"/>
+                        <FormInputButton text="Cancel" ButtonClassName="application-cancel-button" />
+                        <FormInputButton text="Save Application" ButtonClassName="application-save-button" type="submit" />
                     </div>
                 </div>
             </form>

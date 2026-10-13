@@ -55,6 +55,7 @@ async function login(req,res){
             })
         }
         const comparePassword = await bcrypt.compare(data.password, user.password);
+        console.log("Reached");
         if (comparePassword) {
             const token = jwt.sign({
                 "userId": user._id

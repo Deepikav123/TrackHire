@@ -1,4 +1,5 @@
 const authMiddleware = require("../middleware/authMiddleware")
+const applicationModel=require("../models/Application");
 async function getApplications(req, res) {
     try {
         const allApplications = await applicationModel.find({
@@ -7,10 +8,15 @@ async function getApplications(req, res) {
         res.json(allApplications);
     }
     catch (err) {
-        console.log(err.message);
-        res.status(500).json({
-            message: "Server error"
-        });
+        // console.log(err.message);
+        // res.status(500).json({
+        //     message: "Server error"
+        // });
+ console.error("getApplications error:", err);
+    res.status(500).json({
+        message: "Server error"
+    });
+        
     }
 }
 

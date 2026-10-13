@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const env = require("dotenv");
 const authMiddleware=require("./middleware/authMiddleware")
-env.config();
-mongoose.connect('mongodb://127.0.0.1:27017/trackhire');
+env.config({ path: require("path").join(__dirname, ".env") });
+mongoose.connect(process.env.MONGO_URI);
 const app = express();
 
 const applicationRouter=require("./routes/applicationRoutes");

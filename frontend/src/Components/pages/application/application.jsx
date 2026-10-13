@@ -1,19 +1,26 @@
 import { TitleAndSubline } from '../bodyTitle'
 import { useEffect, useState } from 'react';
-
-
+import { useContext } from "react";
+import AuthContext from '../../../../context/authContext';
 
 function Application() {
+    const { token } = useContext(AuthContext);
+
     const [applications, setApplications] = useState([]);
     const [selectedApplication, setSelectedApplication] = useState(null);
     console.log(applications);
+
+    /* useffect is used,because if we directly write fetch code,it ll extract data from backend then performs
+     setApplication and updates applicationstate.When this happens ,the components using application state
+     will re-render,then again automatically it fetches and again re-renders.It ll lead to infinite re-rendering and fetching
+     */
     useEffect(() => {
         async function fetchApplication() {
 
             const response = await fetch('http://localhost:3000/api/applications', {
                 method: "GET",
                 headers: {
-                    "Authorization": "Bearer abc123"
+                    "Authorization": `Bearer ${token}`
                 }
 
             })
@@ -22,7 +29,7 @@ function Application() {
             setSelectedApplication(data[data.length - 1]);
         }
         fetchApplication();
-    }, [])
+    }, [token])
 
 
     function activeApplication(applicationId) {
@@ -87,7 +94,7 @@ function Application() {
                     </div>
                     <div className="pipeline-title">Application Pipeline</div>
                     <div className="pipeline-section">
-                        <PipelineStage  stage={selectedApplication ? selectedApplication.stage : []} />
+                        <PipelineStage stage={selectedApplication ? selectedApplication.stage : []} />
                     </div>
                 </div>
             </div>

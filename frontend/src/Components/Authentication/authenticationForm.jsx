@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../../context/authContext";
 function AuthFormInput({ subheading, type, placeholder, onChange, value, autoComplete }) {
     return (
         <div className="authForm-subSection">
@@ -12,8 +14,11 @@ function AuthFormInput({ subheading, type, placeholder, onChange, value, autoCom
 }
 
 function AuthForm({ mode, heading, subheading, buttonFunction }) {
-    const navigate=useNavigate();
-    
+
+    const navigate = useNavigate();
+    // It extracts setToken property from provider value,which ahs object of token and setToken
+    const { setToken } = useContext(AuthContext);
+
     const [authenticationData, setAuthenticationData] = useState({
         email: "",
         password: "",
@@ -30,12 +35,13 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body:JSON.stringify(authenticationData)
+                body: JSON.stringify(authenticationData)
 
             }
         )
-        const data=await response.json();
-        navigate('/trackhire/app/dashboard');
+        const data = await response.json();
+        mode=="Register"?navigate('/trackhire/authentication/login'):navigate('/trackhire/app/dashboard');
+
 
         console.log(data);
     }
@@ -47,18 +53,18 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body:JSON.stringify(authenticationData)
+                body: JSON.stringify(authenticationData)
             }
         )
-        const data=await response.json();
-        
-        navigate('/trackhire/app/dashboard');
-        console.log("Yes");
-        console.log(data);
+        const data = await response.json();
+        setToken(data.token);
+               navigate('/trackhire/app/dashboard');
+
+        console.log(data.token);
     }
 
     return (
-        <form className="auth-form" onSubmit={mode=="Register"?submitRegisterForm:submitLoginForm} >
+        <form className="auth-form" onSubmit={mode == "Register" ? submitRegisterForm : submitLoginForm} >
             <div className="auth-form-headings">
                 <h1 className="auth-form-heading">
                     {heading}

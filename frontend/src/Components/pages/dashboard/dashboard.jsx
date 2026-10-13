@@ -3,9 +3,11 @@ import { SummaryCard, RecentApplicationCard } from "./dashboardCards";
 import applicationIcon from '../../../images/icons/application.png'
 import inProgressIcon from '../../../images/icons/inProgress.png'
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import AuthContext from "../../../../context/authContext";
 function Dashboard() {
 
-    
+    const { token } = useContext(AuthContext);
     const [applications, setApplications] = useState([]);
 
     const [summary, setSummary] = useState(
@@ -13,18 +15,24 @@ function Dashboard() {
             total: 0,
             inProgress: 0,
             interview: 0,
-            offer:0,
-            rejection:0
+            offer: 0,
+            rejection: 0
         }
     )
 
     useEffect(() => {
         async function fetchApplication() {
-            const response = await fetch('http://localhost:3000/api/applications')
+            const response = await fetch('http://localhost:3000/api/applications', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             const data = await response.json();
             setApplications(data);
             console.log(data);
             // In-Progress
+            console.log("API response:", data);
+            console.log("Is array:", Array.isArray(data));
             const progressCount = data.filter(application => {
                 const lastStage = application.stage[application.stage.length - 1];
                 return lastStage && lastStage.status != 'failed'
@@ -34,16 +42,16 @@ function Dashboard() {
                 const lastStage = application.stage[application.stage.length - 1];
                 return lastStage && lastStage.name.includes("interview") && lastStage.status == 'upcoming'
             })
-            
+
             // Selected
             const offerCount = data.filter((application) => {
                 const lastStage = application.stage[application.stage.length - 1];
-                return lastStage && lastStage.name=='selected' 
+                return lastStage && lastStage.name == 'selected'
             })
             // Rejected
             const rejectCount = data.filter((application) => {
                 const lastStage = application.stage[application.stage.length - 1];
-                return lastStage &&  lastStage.status == 'failed'
+                return lastStage && lastStage.status == 'failed'
             })
 
             setSummary(prev => ({
@@ -51,14 +59,14 @@ function Dashboard() {
                 total: data.length,
                 inProgress: progressCount.length,
                 interview: interviewCount.length,
-                offer:offerCount.length,
-                rejection:rejectCount.length
+                offer: offerCount.length,
+                rejection: rejectCount.length
             }
             ))
         }
 
         fetchApplication();
-    }, [])
+    }, [token])
 
     const SummaryCardsArray = [
         {
@@ -111,7 +119,7 @@ function Dashboard() {
             <div className="recent-applications">
                 {
                     applications.slice(-3).map((application) => (
-                        <RecentApplicationCard role={application.role} company={application.company} stage={application.stage[application.stage.length-1].name} status={application.stage[application.stage.length-1].status}  date={application.applicationDate} key={application._id} />
+                        <RecentApplicationCard role={application.role} company={application.company} stage={application.stage[application.stage.length - 1].name} status={application.stage[application.stage.length - 1].status} date={application.applicationDate} key={application._id} />
                     ))
                 }
 
