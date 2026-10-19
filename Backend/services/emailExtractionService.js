@@ -1,22 +1,6 @@
 function extractCompany1(name) {
-    let ans = "";
-    let i = 0;
-    const j = name.length - 1;
-    while (name[i] != '@') {
-        if (i == j) {
-            return "";
-        }
-        i++;
-    }
-    i++;
-    while (name[i] != '.') {
-        if (i == j) {
-            return "";
-        }
-        ans += name[i];
-        i++;
-    }
-    return ans;
+    const company = name.match(/@([^.]+)\./);
+    return company ? company[1] : "";
 }
 function normalize(data) {
     let newData = data.replaceAll(' ', '');
@@ -118,4 +102,4 @@ function stage(data) {
 
     return "";
 }
-module.exports={ extractCompany1, extractCompany2, processDate, meetingLinkExtract, roleExtract, jobType, stage }
+module.exports = { extractCompany1, extractCompany2, processDate, meetingLinkExtract, roleExtract, jobType, stage }

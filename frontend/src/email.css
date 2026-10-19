@@ -66,10 +66,10 @@ font-weight: bold;
     
 
 }
-.modal-heading{
+/* .modal-heading{
 display: flex;
     gap: 20px;
-}
+} */
 .modal-close{
 border: none;
 background-color: white;

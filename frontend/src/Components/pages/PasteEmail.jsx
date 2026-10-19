@@ -4,13 +4,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from "react";
 import { useContext } from "react";
 import AuthContext from "../../../context/authContext";
+import { ModalInputText, ModalHeading, ModalButtons } from "./modal";
 
-function ModalInputText({ subheading, value, onChange }) {
-    return (<div className="modal-form-subsection">
-        <h4 className="modal-form-subheading">{subheading}</h4>
-        <input type="text" className="modal-form-input" value={value} onChange={onChange} />
-    </div>)
-}
+// function ModalInputText({ subheading, value, onChange }) {
+//     return (<div className="modal-form-subsection">
+//         <h4 className="modal-form-subheading">{subheading}</h4>
+//         <input type="text" className="modal-form-input" value={value} onChange={onChange} />
+//     </div>)
+// }
 
 
 function PasteEmail() {
@@ -93,6 +94,9 @@ function PasteEmail() {
         console.log(data);
         navigate('/trackhire/app/application');
     }
+    function closeModal() {
+        setModal(false);
+    }
 
     return (
         <>
@@ -130,15 +134,7 @@ function PasteEmail() {
                 modal && (
                     <div className="overlay">
                         <div className="modal">
-                            <div className="modal-heading">
-
-                                <TitleAndSubline title="Extracted Details" subline="Review the information extracted from your email.You can edit any field if needed,then confirm to save it." />
-                                <button className="modal-close" onClick={
-                                    () => (
-                                        setModal(false)
-                                    )
-                                }>X</button>
-                            </div>
+                            <ModalHeading title="Extracted Details" subline="Review the information extracted from your email.You can edit any field if needed,then confirm to save it." />
                             <div className="modal-body">
                                 <ModalInputText subheading="Company" value={extractedData.company} onChange={(e) => {
                                     setExtractedData(
@@ -212,10 +208,11 @@ function PasteEmail() {
                             </div>
 
                             <div className="modal-buttons">
-                                <button className="modal-cancel modal-button" onClick={() => (
-                                    setModal(false)
-                                )}>Cancel</button>
-                                <button className="modal-confirm modal-button" onClick={PassMailData}>Confirm</button>
+
+                                <ModalButtons buttonText="Cancel" buttonClass="modal-cancel modal-button" buttonFunction={() => (
+                                    closeModal()
+                                )} />
+                                <ModalButtons buttonText="Confirm" buttonClass="modal-confirm modal-button" buttonFunction={PassMailData} />
                             </div>
 
                         </div>

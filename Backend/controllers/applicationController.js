@@ -1,9 +1,9 @@
 const authMiddleware = require("../middleware/authMiddleware")
-const applicationModel=require("../models/Application");
+const applicationModel = require("../models/Application");
 async function getApplications(req, res) {
     try {
         const allApplications = await applicationModel.find({
-            user:req.user.userId
+            user: req.user.userId
         });
         res.json(allApplications);
     }
@@ -12,11 +12,11 @@ async function getApplications(req, res) {
         // res.status(500).json({
         //     message: "Server error"
         // });
- console.error("getApplications error:", err);
-    res.status(500).json({
-        message: "Server error"
-    });
-        
+        console.error("getApplications error:", err);
+        res.status(500).json({
+            message: "Server error"
+        });
+
     }
 }
 
@@ -25,11 +25,11 @@ async function getApplication(req, res) {
 
         const id = req.params.id;
         const findApplication = await applicationModel.findOne({
-            $and:[
-                {user:req.user.userId},
-                {_id:id}
+            $and: [
+                { user: req.user.userId },
+                { _id: id }
             ]
-            
+
         });
         if (!findApplication) {
             return res.status(404).json(
@@ -50,13 +50,13 @@ async function createApplication(req, res) {
     try {
 
         const data = req.body;
-          const applicationData = {
-                ...data,
-                user: req.user.userId
-            }
+        const applicationData = {
+            ...data,
+            user: req.user.userId
+        }
         let applicationFilter = await applicationModel.findOne({
             $and: [
-                {user:applicationData.user},
+                { user: applicationData.user },
                 { company: applicationData.company },
                 { role: applicationData.role }
             ]
@@ -68,7 +68,7 @@ async function createApplication(req, res) {
             res.json(applicationFilter)
         }
         else {
-          
+
             const applicationCreation = await applicationModel.create(applicationData);
 
             res.status(201).json(applicationCreation);
@@ -91,18 +91,36 @@ async function createApplication(req, res) {
 }
 
 async function updateApplication(req, res) {
+
     try {
+        const data = req.body;
         const id = req.params.id;
-        const applicationUpdate = await applicationModel.findByIdAndUpdate(
-            id,
+        const extractedApplication = {
+            ...data,
+            user: req.user.userId
+        };
+        console.log(extractedApplication);
+        const applicationUpdate = await applicationModel.findOneAndUpdate(
+            {
+                _id: id,
+                user: extractedApplication.user
+
+            },
             {
                 $set: {
-                    status: req.body.status
+                    company: extractedApplication.company,
+                    role: extractedApplication.role,
+                    applicationDate: extractedApplication.applicationDate,
+                    location: extractedApplication.location,
+                    jobtype: extractedApplication.jobtype,
+                    salary: extractedApplication.salary,
+                    notes: extractedApplication.notes,
+stage:extractedApplication.stage
                 }
             },
             {
                 runValidators: true,
-                new: true
+                returnDocument: 'after' 
             }
         )
         if (!applicationUpdate) {
@@ -111,6 +129,7 @@ async function updateApplication(req, res) {
 
             )
         }
+        console.log(applicationUpdate);
         res.json(applicationUpdate);
 
     }

@@ -58,6 +58,9 @@ const applicationSchema = new mongoose.Schema(
             ref: "Users",
             required:true
         }
+    },
+    {
+        timestamps: true
     }
 )
 const applicationModel = mongoose.model("Applications", applicationSchema);

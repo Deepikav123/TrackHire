@@ -10,7 +10,7 @@
 } */
 .application-card{
     display: grid;
-    grid-template-columns: 2fr 1fr 1.4fr 40px;
+    grid-template-columns: 1fr 1fr 1.4fr 40px;
     background-color: #FFFFFF;
     padding: 10px;
     box-shadow: 0px 0px 2px gray;
@@ -69,26 +69,57 @@ border-radius: 10px;
 position: sticky;
     height: 400px;
     top: 90px;
+    display: flex;
+    gap: 10px;
 }
 
 /* Pipeline */
+.application-company-icon{
+    height: 40px;
+}
+
 .pipeline-companyTitle{
     font-size: larger;
     font-weight: bold;
     margin: 10px 0px;
+  
 }
 
 .pipeline-title{
 font-weight: bold;
-
 }
 
 .pipeline-section{
-    padding: 15px 0px;
+    padding: 10px 0px;
 }
 .pipeline-stage{
     display: flex;
     gap: 10px;
-    padding: 10px 0px;
+    padding: 10px 5px;
     align-items: center;
+    box-shadow: 0px 0px 3px gray;
+    border-radius: 10px;
+}
+.indication-circle{
+height: 25px;
+}
+
+.applicationEdit,.applicationDelete{
+    background-color: white;
+    border: none;
+}
+.editIcon,.deleteIcon{
+    height: 25px;
+box-shadow: 0px 0px 3px gray;
+cursor: pointer;
+}
+.pipeline-subHeading-section{
+    display: flex;
+margin: 35px 0px 0px 0px;
+gap: 10px;
+justify-content: space-between;
+    
+}
+.select-stage{
+    width: 185px;
 }
