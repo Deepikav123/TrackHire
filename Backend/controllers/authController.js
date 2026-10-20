@@ -1,30 +1,34 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const userModel=require("../models/User");
-async function register(req,res){
- try {
+const userModel = require("../models/User");
+async function register(req, res) {
+    try {
         const data = req.body;
-        if(data.password!=data.confirmPassword){
-            return res(400).json({
-                "Message":"Password Mismatched"
-            })
-        }
+
         const isExist = await userModel.findOne({
             email: data.email
         })
+
         if (isExist) {
-            return res.status(409).json({ "Message": "User already exist" })
+            return res.status(409).json({ message: "User already exist" })
         }
+
+        if (data.password != data.confirmPassword) {
+            return res.status(400).json({
+                message: "Passwords do not match."
+            })
+        }
+
         const hashedValue = await bcrypt.hash(data.password, 10);
 
         const user = {
+            username: data.username ? data.username : "User",
             email: data.email,
             password: hashedValue
         }
-        console.log(userModel);
         await userModel.create(user);
         res.status(201).json({
-            "Message": "Successfully created"
+            message: "Successfully created"
         });
 
     }
@@ -42,8 +46,8 @@ async function register(req,res){
     }
 }
 
-async function login(req,res){
-     try {
+async function login(req, res) {
+    try {
 
         const data = req.body;
         const user = await userModel.findOne({
@@ -51,23 +55,22 @@ async function login(req,res){
         })
         if (!user) {
             return res.status(404).json({
-                "Message": "User not found"
+                message: "User not found"
             })
         }
         const comparePassword = await bcrypt.compare(data.password, user.password);
-        console.log("Reached");
         if (comparePassword) {
             const token = jwt.sign({
                 "userId": user._id
             }, process.env.JWT_SECRET)
             res.status(200).json({
-                "Message": "Successful Login",
+                message: "Successful Login",
                 "token": token
             })
         }
         else {
             return res.status(400).json({
-                "Message": "Invalid email or password"
+                message: "Invalid email or password"
             })
         }
     }
@@ -86,4 +89,27 @@ async function login(req,res){
 
 }
 
-module.exports= {register,login}
+async function getUser(req, res) {
+    try {
+        const userId = req.user.userId;
+        const user = await userModel.findOne(
+            {
+                _id: userId
+            }
+        )
+        if (!user) {
+            return res.status(404).json({
+                message: "Application not found"
+            })
+        }
+        return res.status(200).json(user);
+    }
+    catch (err) {
+        res.status(500).json({
+            message: "Server error"
+        });
+
+    }
+}
+
+module.exports = { register, login, getUser }

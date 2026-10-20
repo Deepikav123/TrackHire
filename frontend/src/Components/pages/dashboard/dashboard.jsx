@@ -29,10 +29,8 @@ function Dashboard() {
             })
             const data = await response.json();
             setApplications(data);
-            console.log(data);
             // In-Progress
-            console.log("API response:", data);
-            console.log("Is array:", Array.isArray(data));
+         
             const progressCount = data.filter(application => {
                 const lastStage = application.stage[application.stage.length - 1];
                 return lastStage && lastStage.status != 'failed'

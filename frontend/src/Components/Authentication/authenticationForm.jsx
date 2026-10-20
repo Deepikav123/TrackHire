@@ -6,7 +6,7 @@ function AuthFormInput({ subheading, type, placeholder, onChange, value, autoCom
     return (
         <div className="authForm-subSection">
             <div className="authForm-inputHeading">
-                {subheading}
+                {subheading} <span className="required-star">*</span>
             </div>
             <input type={type} placeholder={placeholder} className="authForm-input" onChange={onChange} value={value} autoComplete={autoComplete} />
         </div>
@@ -18,8 +18,10 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
     const navigate = useNavigate();
     // It extracts setToken property from provider value,which ahs object of token and setToken
     const { setToken } = useContext(AuthContext);
+    const [errMessage, setErrMessage] = useState("");
 
     const [authenticationData, setAuthenticationData] = useState({
+        username: "",
         email: "",
         password: "",
         confirmPassword: ""
@@ -39,12 +41,17 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
 
             }
         )
+
         const data = await response.json();
-        mode=="Register"?navigate('/trackhire/authentication/login'):navigate('/trackhire/app/dashboard');
+        if(!response.ok){
+            setErrMessage(data.message);
+            return;
+        }
+        mode == "Register" ? navigate('/trackhire/authentication/login') : navigate('/trackhire/app/dashboard');
 
 
-        console.log(data);
     }
+
     async function submitLoginForm(e) {
         e.preventDefault();
         const response = await fetch("http://localhost:3000/api/auth/login",
@@ -57,10 +64,13 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
             }
         )
         const data = await response.json();
-        setToken(data.token);
-               navigate('/trackhire/app/dashboard');
+        if (!response.ok) {
+            setErrMessage(data.message);
+            return;
+        }
 
-        console.log(data.token);
+        setToken(data.token);
+        navigate('/trackhire/app/dashboard');
     }
 
     return (
@@ -74,11 +84,22 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
                 </div>
             </div>
             <div className="authentication-form-section">
+                {mode == "Register" && <AuthFormInput subheading="Username" type="text" placeholder="Enter your name" onChange={e => {
+                    setAuthenticationData(Prev => ({
+                        ...Prev,
+                        username: e.target.value
+                    }))
+                    setErrMessage("");
+
+                }} value={authenticationData.username} />}
+
                 <AuthFormInput subheading="Email Address" type="email" placeholder="you@example.com" onChange={e => {
                     setAuthenticationData(Prev => ({
                         ...Prev,
                         email: e.target.value
                     }))
+                    setErrMessage("");
+
                 }} value={authenticationData.email} autoComplete="email" />
                 <AuthFormInput subheading="Password" type="password" placeholder="Enter your password" onChange={e => {
 
@@ -86,9 +107,11 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
                         ...Prev,
                         password: e.target.value
                     })
+
                     )
+                    setErrMessage("")
                 }} value={authenticationData.password} autoComplete={mode == "Login" ? "current-password" : "new-password"} />
-                {mode == "Login" && <div className="forgot-password"> Forgot Password? </div>}
+                {/* {mode == "Login" && <div className="forgot-password"> Forgot Password? </div>} */}
                 {mode == "Register" && <AuthFormInput subheading="Confirm Password" type="password" placeholder="Confirm your password" onChange={e => {
                     setAuthenticationData(
                         Prev => ({
@@ -96,16 +119,23 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
                             confirmPassword: e.target.value
                         })
                     )
+                    setErrMessage("");
 
                 }} value={authenticationData.confirmPassword} autoComplete="new-password" />}
             </div>
             <div className="authentication-form-buttons">
                 <button className="auth-button auth-mode" type="submit">{mode}</button>
-                <div className="auth-button-option">OR</div>
-                <button className="auth-button google">Continue with Google</button>
+                {/* <div className="auth-button-option">OR</div>
+                <button className="auth-button google">Continue with Google</button> */}
             </div>
+            {errMessage && <div className="error-message"><span className="error-icon">!</span> {errMessage}</div>}
             <div className="auth-suggestion-section">
-                {mode == "Login" ? "Don't" : "Already"} have an account?<span className="auth-suggestion">{mode == "Login" ? " Register" : " Login"}</span>
+                {mode == "Login" ? "Don't" : "Already"} have an account?<button className="auth-suggestion" type="button" onClick={() => {
+
+                    mode == "Register" ? navigate('/trackhire/authentication/login') : navigate('/trackhire/authentication/register');
+                }
+
+                }>{mode == "Login" ? " Register" : " Login"}</button>
             </div>
         </form>
     )

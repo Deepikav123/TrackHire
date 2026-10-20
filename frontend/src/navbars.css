@@ -126,8 +126,9 @@ body {
 }
 
 .profile-img {
-    height: 50px;
+    height: 35px;
     border-radius: 30px;
+    background-color: #dfd8fc;
 }
 
 .right-topNavbar {

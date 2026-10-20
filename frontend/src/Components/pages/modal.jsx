@@ -1,8 +1,8 @@
 import { TitleAndSubline, SubHeading } from "./bodyTitle";
 
-function ModalInputText({ subheading, value, onChange }) {
+function ModalInputText({ subheading, value, onChange,required }) {
     return (<div className="modal-form-subsection">
-        <h4 className="modal-form-subheading">{subheading}</h4>
+        <h4 className="modal-form-subheading" >{subheading} {required &&<span className="required-star" >*</span>}</h4>
         <input type="text" className="modal-form-input" value={value} onChange={onChange} />
     </div>)
 }

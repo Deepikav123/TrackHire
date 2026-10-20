@@ -5,12 +5,19 @@ async function analyzeEmail(req, res){
         // Company Name
         const data1 = req.body.sender;
         const data2 = req.body.emailText;
+        if(!data1 || !data2){
+            return res.status(404).json(
+                {
+                    message:"Invalid email data"
+                }
+            )
+        }
         const companyName1 = emailExtractServices.extractCompany1(data1);
         const companyName2 = emailExtractServices.extractCompany2(data2, companyName1)
 
         // Company Stage
-
         const companyStage = emailExtractServices.stage(data2);
+
         // Date and Time
         const processDateDetails = emailExtractServices.processDate(data2);
 
@@ -33,7 +40,6 @@ async function analyzeEmail(req, res){
         });
     }
     catch (err) {
-        console.log(err.message);
         res.status(500).json({
             message: "Server error"
         });

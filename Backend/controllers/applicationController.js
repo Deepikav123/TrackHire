@@ -1,4 +1,4 @@
-const authMiddleware = require("../middleware/authMiddleware")
+const authMiddleware = require("../middleware/authMiddleware");
 const applicationModel = require("../models/Application");
 async function getApplications(req, res) {
     try {
@@ -8,11 +8,6 @@ async function getApplications(req, res) {
         res.json(allApplications);
     }
     catch (err) {
-        // console.log(err.message);
-        // res.status(500).json({
-        //     message: "Server error"
-        // });
-        console.error("getApplications error:", err);
         res.status(500).json({
             message: "Server error"
         });
@@ -39,7 +34,6 @@ async function getApplication(req, res) {
         res.json(findApplication);
     }
     catch (err) {
-        console.log(err.message);
         res.status(500).json({
             message: "Server error"
         });
@@ -99,7 +93,6 @@ async function updateApplication(req, res) {
             ...data,
             user: req.user.userId
         };
-        console.log(extractedApplication);
         const applicationUpdate = await applicationModel.findOneAndUpdate(
             {
                 _id: id,
@@ -115,12 +108,12 @@ async function updateApplication(req, res) {
                     jobtype: extractedApplication.jobtype,
                     salary: extractedApplication.salary,
                     notes: extractedApplication.notes,
-stage:extractedApplication.stage
+                    stage: extractedApplication.stage
                 }
             },
             {
                 runValidators: true,
-                returnDocument: 'after' 
+                returnDocument: 'after'
             }
         )
         if (!applicationUpdate) {
@@ -129,12 +122,16 @@ stage:extractedApplication.stage
 
             )
         }
-        console.log(applicationUpdate);
         res.json(applicationUpdate);
 
     }
     catch (err) {
-        console.log(err.message);
+         if (err.name === "ValidationError") {
+            return res.status(400).json({
+                message: "Invalid application data",
+                error: err.message
+            });
+        }
         res.status(500).json({
             message: "Server error"
         });
@@ -146,7 +143,10 @@ async function deleteApplication(req, res) {
     try {
 
         const id = req.params.id;
-        const applicationDeletion = await applicationModel.findByIdAndDelete(id
+        const applicationDeletion = await applicationModel.findOneAndDelete({
+            user:req.user.userId,
+            _id:id
+        }
         )
         if (!applicationDeletion) {
             return res.status(404).json(
@@ -157,7 +157,6 @@ async function deleteApplication(req, res) {
         res.json(applicationDeletion);
     }
     catch (err) {
-        console.log(err.message);
         res.status(500).json({
             message: "Server error"
         });

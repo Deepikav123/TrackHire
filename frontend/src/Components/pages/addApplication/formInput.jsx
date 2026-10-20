@@ -1,24 +1,24 @@
-function FormInputText({ subheading, placeholder,onChange,value }) {
+function FormInputText({ subheading, placeholder,onChange,value,required }) {
     return (
         <div className="form-subsection">
-            <h4 className="form-subheading">{subheading}</h4>
+            <h4 className="form-subheading">{subheading} {required &&<span className="required-star" >*</span>}</h4>
             <input type="text" className="form-input" placeholder={placeholder} value={value} onChange={onChange} />
         </div>
     )
 }
-function FormInputDate({ subheading, placeholder,onChange,value }) {
+function FormInputDate({ subheading, placeholder,onChange,value,required }) {
     return (
         <div className="form-subsection">
-            <h4 className="form-subheading">{subheading}</h4>
+            <h4 className="form-subheading">{subheading} {required &&<span className="required-star" >*</span>}</h4>
             <input type="date" className="form-input" placeholder={placeholder} value={value} onChange={onChange} />
         </div>
     )
 }
 
-function FormInputSelect({ subheading, optionArray,onChange,value}) {
+function FormInputSelect({ subheading, optionArray,onChange,value,required}) {
     return (
         <div className="form-subsection">
-            <h4 className="form-subheading">{subheading}</h4>
+            <h4 className="form-subheading">{subheading} {required &&<span className="required-star" >*</span>}</h4>
             <select className="form-input" value={value} onChange={onChange}  >
                 {
                     optionArray.map((opt) => (

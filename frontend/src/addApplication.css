@@ -118,3 +118,7 @@ padding: 10px;
    border: none;
    font-weight: bold;
 }
+.addApplication-error,.pasteEmail-error{
+    color: red;
+    padding: 5px 0px 15px 25px;
+}

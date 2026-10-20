@@ -16,7 +16,7 @@ import { ModalInputText, ModalHeading, ModalButtons } from "./modal";
 
 function PasteEmail() {
     const { token } = useContext(AuthContext);
-
+    const [errMessage, setErrMessage] = useState("");
     const navigate = useNavigate();
     const [email, setEmail] = useState({
         sender: "",
@@ -24,6 +24,8 @@ function PasteEmail() {
     });
 
     const [modal, setModal] = useState(false);
+    const [formErrMessage, setFormErrMessage] = useState("");
+    
 
     const [extractedData, setExtractedData] = useState(
         {
@@ -60,8 +62,11 @@ function PasteEmail() {
             })
         });
         const data = await response.json();
+        if (!response.ok) {
+            setErrMessage(data.message);
+            return;
+        }
         setModal(true);
-        console.log(data);
         setExtractedData({
             company: capitalizeFirstLetter(data.company),
             role: capitalizeFirstLetter(data.role),
@@ -91,7 +96,10 @@ function PasteEmail() {
             }
         )
         const data = await response.json();
-        console.log(data);
+        if (!response.ok) {
+            setFormErrMessage(data.message);
+            return;
+        }
         navigate('/trackhire/app/application');
     }
     function closeModal() {
@@ -111,18 +119,31 @@ function PasteEmail() {
                                 sender: e.target.value
                             }
                         })
+                        setErrMessage("");
+
                     })} />
                     <textarea className="email-importBox" placeholder='Paste your job-related email here..' rows={15} onChange={((e) => (
                         setEmail(Prev => {
+                            setErrMessage("");
                             return {
                                 ...Prev,
                                 body: e.target.value
+
                             }
+
                         }
+
                         )
-                    ))}></textarea>
+
+                    )
+
+                    )
+
+                    }></textarea>
                 </div>
                 <div className="secure-message">🔒 Your email content is used only to extract application details.</div>
+                {errMessage && <div className="pasteEmail-error"><span className="error-icon">!</span> {errMessage}</div>}
+
                 <div className="email-buttons">
                     <Link to='/trackhire/app/dashboard' className="email-cancel-button email-button" >Cancel</Link>
                     <button className="email-analyze-button email-button" type="submit">Analyze Email</button>
@@ -136,7 +157,7 @@ function PasteEmail() {
                         <div className="modal">
                             <ModalHeading title="Extracted Details" subline="Review the information extracted from your email.You can edit any field if needed,then confirm to save it." />
                             <div className="modal-body">
-                                <ModalInputText subheading="Company" value={extractedData.company} onChange={(e) => {
+                                <ModalInputText subheading="Company" value={extractedData.company} required="true" onChange={(e) => {
                                     setExtractedData(
                                         Prev => {
                                             return {
@@ -146,7 +167,7 @@ function PasteEmail() {
                                         }
                                     )
                                 }} />
-                                <ModalInputText subheading="Job Role" value={extractedData.role} onChange={(e) => {
+                                <ModalInputText subheading="Job Role" value={extractedData.role} required={true} onChange={(e) => {
                                     setExtractedData(
                                         Prev => {
                                             return {
@@ -157,7 +178,7 @@ function PasteEmail() {
                                     )
                                 }} />
 
-                                <ModalInputText subheading="Recruitment Stage" value={extractedData.stage.name} onChange={(e) => {
+                                <ModalInputText subheading="Recruitment Stage" required={true} value={extractedData.stage.name} onChange={(e) => {
                                     setExtractedData(
                                         Prev => {
                                             return {
@@ -172,7 +193,7 @@ function PasteEmail() {
                                     )
                                 }} />
 
-                                <ModalInputText subheading="Application Date" value={extractedData.applicationDate} onChange={(e) => {
+                                <ModalInputText subheading="Application Date" required={false} value={extractedData.applicationDate} onChange={(e) => {
                                     setExtractedData(
                                         Prev => {
                                             return {
@@ -183,7 +204,7 @@ function PasteEmail() {
                                     )
                                 }} />
 
-                                <ModalInputText subheading="Job Type" value={extractedData.jobtype} onChange={(e) => {
+                                <ModalInputText subheading="Job Type" required={false} value={extractedData.jobtype} onChange={(e) => {
                                     setExtractedData(
                                         Prev => {
                                             return {
@@ -193,7 +214,7 @@ function PasteEmail() {
                                         }
                                     )
                                 }} />
-                                <ModalInputText subheading="Location(if available)" value={extractedData.location} onChange={(e) => {
+                                <ModalInputText subheading="Location(if available)" required={false} value={extractedData.location} onChange={(e) => {
                                     setExtractedData(
                                         Prev => {
                                             return {
@@ -206,6 +227,8 @@ function PasteEmail() {
 
 
                             </div>
+                            {formErrMessage && <div className="pasteEmail-error"><span className="error-icon">!</span> {formErrMessage}</div>}
+
 
                             <div className="modal-buttons">
 

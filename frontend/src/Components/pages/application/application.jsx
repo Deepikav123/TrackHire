@@ -17,7 +17,8 @@ function Application() {
     const [newStatus, setNewStatus] = useState("");
     const [applications, setApplications] = useState([]);
     const [selectedApplication, setSelectedApplication] = useState(null);
-    console.log(applications);
+    const [formErrMessage, setFormErrMessage] = useState("");
+    const [errMessage, setErrMessage] = useState("");
 
     /* useffect is used,because if we directly write fetch code,it ll extract data from backend then performs
      setApplication and updates applicationstate.When this happens ,the components using application state
@@ -34,8 +35,11 @@ function Application() {
 
             })
             const data = await response.json();
+            if (!response.ok) {
+                setErrMessage(data.message);
+                return;
+            }
             setApplications(data);
-            console.log(data);
 
             setSelectedApplication(data[data.length - 1]);
         }
@@ -62,7 +66,7 @@ function Application() {
                     <div className="application-role">{role}</div>
                     <div className="application-companyName">{company}</div>
                 </div>
-                <div className="application-stage">{stage}</div>
+                <div className="application-stage" >{stage}</div>
                 <div className="application-date">
                     <div className="application-date-sideHeading">Last Updated</div>
                     <div className="application-date-data">{date}</div>
@@ -73,8 +77,7 @@ function Application() {
     }
 
     function PipelineStage({ stage }) {
-        console.log("PipelineStage stage:", stage);
-        console.log("Is array:", Array.isArray(stage));
+       
         return (
             <>
                 {stage.map(s => (
@@ -99,13 +102,11 @@ function Application() {
             year: "numeric",
         });
 
-        console.log(extractedDate); // 18 Oct 2026
         return extractedDate;
     }
 
     async function editApplication(id) {
 
-        setModal(false);
 
         const response = await fetch(`http://localhost:3000/api/applications/${id}`, {
             method: "PUT",
@@ -115,8 +116,12 @@ function Application() {
             },
             body: JSON.stringify(selectedApplication)
         })
-        console.log(response.status);
         const data = await response.json();
+        if (!response.ok) {
+            setFormErrMessage(data.message);
+            return;
+        }
+        setModal(false);
         setSelectedApplication(data);
         setApplications(prev => prev.map(application =>
             data._id === application._id ? data : application))
@@ -125,6 +130,30 @@ function Application() {
     const selectedStage = selectedApplication?.stage.find(s => (
         s._id === selectedStageId
     ))
+
+    async function deleteApplicationFunction(id) {
+        const alertNotification = confirm("Do you really want to delete this Application?");
+        if (!alertNotification) {
+            return;
+        }
+        const response = await fetch(`http://localhost:3000/api/applications/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            }
+        })
+
+        if (response.ok) {
+            setApplications(prev =>
+                prev.filter((application) => application._id !== id)
+            )
+            setSelectedApplication(applications[applications.length - 1]);
+        }
+        else {
+            alert("Failed to delete application.");
+        }
+    }
 
     return (
         <>
@@ -150,7 +179,10 @@ function Application() {
                                     <button className="applicationEdit" onClick={() => {
                                         setModal(true)
                                     }}><img src={edit} alt="" className='editIcon' /></button>
-                                    <button className="applicationDelete"><img src={deleteApplication} alt="" className='deleteIcon' /></button>
+                                    <button className="applicationDelete" onClick={() => {
+                                        deleteApplicationFunction(selectedApplication._id)
+                                    }
+                                    }><img src={deleteApplication} alt="" className='deleteIcon' /></button>
                                 </div>
                             </div>
                             <div className="pipeline-section">
@@ -168,7 +200,7 @@ function Application() {
                         <div className="modal">
                             <ModalHeading title="Extracted Details" subline="Review the information extracted from your email.You can edit any field if needed,then confirm to save it." />
                             <div className="modal-body">
-                                <ModalInputText subheading="Company" value={selectedApplication.company} onChange={(e) => {
+                                <ModalInputText subheading="Company" required={true} value={selectedApplication.company} onChange={(e) => {
                                     setSelectedApplication(
                                         Prev => {
                                             return {
@@ -177,8 +209,10 @@ function Application() {
                                             }
                                         }
                                     )
+                                    setFormErrMessage("");
+
                                 }} />
-                                <ModalInputText subheading="Job Role" value={selectedApplication.role} onChange={(e) => {
+                                <ModalInputText subheading="Job Role" required={true} value={selectedApplication.role} onChange={(e) => {
                                     setSelectedApplication(
                                         Prev => {
                                             return {
@@ -187,20 +221,28 @@ function Application() {
                                             }
                                         }
                                     )
+                                    setFormErrMessage("");
+
                                 }} />
                                 <div className="modal-form-subsection">
-                                    <h4 className="modal-form-subheading">Recruitment Stage</h4>
-                                    <select name="" id="" className='modal-form-input select-stage' onChange={(e) => setSelectedStageId(e.target.value)}>
+                                    <h4 className="modal-form-subheading">Recruitment Stage <span className="required-star" >*</span></h4>
+                                    <select name="" id="" className='modal-form-input select-stage' onChange={(e) => setSelectedStageId(e.target.value)
+
+
+                                    }>
                                         {selectedApplication.stage.toReversed().map(s => (
                                             <option value={s._id} key={s._id}>{s.name}</option>
-                                        ))
+
+                                        )
+                                        )
+
                                         }
                                     </select>
 
                                 </div>
 
                                 <div className="modal-form-subsection">
-                                    <h4 className="modal-form-subheading">Recruitment Status</h4>
+                                    <h4 className="modal-form-subheading">Recruitment Status <span className="required-star" >*</span></h4>
                                     <select name="" id="" className='modal-form-input select-stage' value={selectedStage?.status || ""} onChange={(e) => {
                                         setSelectedApplication(prev => ({
                                             ...prev,
@@ -222,7 +264,7 @@ function Application() {
 
                                 </div>
 
-                                <ModalInputText subheading="Job Type" value={selectedApplication.jobtype} onChange={(e) => {
+                                <ModalInputText subheading="Job Type" required={false} value={selectedApplication.jobtype} onChange={(e) => {
                                     setSelectedApplication(
                                         Prev => {
                                             return {
@@ -230,9 +272,12 @@ function Application() {
                                                 jobtype: e.target.value
                                             }
                                         }
+                                        
                                     )
+                                    setFormErrMessage("");
+
                                 }} />
-                                <ModalInputText subheading="Location(if available)" value={selectedApplication.location} onChange={(e) => {
+                                <ModalInputText subheading="Location(if available)" required={false} value={selectedApplication.location} onChange={(e) => {
                                     setSelectedApplication(
                                         Prev => {
                                             return {
@@ -241,10 +286,13 @@ function Application() {
                                             }
                                         }
                                     )
+                                    setFormErrMessage("");
+
                                 }} />
 
 
                             </div>
+                            {formErrMessage && <div className="pasteEmail-error"><span className="error-icon">!</span> {formErrMessage}</div>}
 
                             <div className="modal-buttons">
 

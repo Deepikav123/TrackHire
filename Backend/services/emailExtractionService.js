@@ -1,17 +1,21 @@
-function extractCompany1(name) {
-    const company = name.match(/@([^.]+)\./);
-    return company ? company[1] : "";
-}
+
 function normalize(data) {
     let newData = data.replaceAll(' ', '');
     return newData.toLowerCase();
 }
 
+function extractCompany1(name) {
+    const company = name.match(/@([^.]+)\./);
+    return company ? company[1] : "";
+}
+
 function extractCompany2(data2, data1) {
-    let newData1 = normalize(data1);
-    let newData2 = normalize(data2);
-    if (newData2.includes(newData1)) {
-        return newData1;
+    if(data1){
+        let newData1 = normalize(data1);
+        let newData2 = normalize(data2);
+        if (newData2.includes(newData1)) {
+            return newData1;
+        }
     }
 
     return "";

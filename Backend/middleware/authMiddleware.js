@@ -4,7 +4,7 @@ function authMiddleware(req, res, next) {
     if (!authorizationHeader) {
         return res.status(401).json(
             {
-                "Message": "Unauthorized Access"
+                message: "Unauthorized Access"
             }
         )
     }
@@ -19,7 +19,7 @@ function authMiddleware(req, res, next) {
 
         return res.status(401).json(
             {
-                "Message": "Unauthorized Access"
+                message: "Unauthorized Access"
             }
         )
     }
