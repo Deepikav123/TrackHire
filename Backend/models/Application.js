@@ -8,7 +8,7 @@ const stageSchema = new mongoose.Schema({
     status: {
         type: String,
         // required: true,
-        enum: ["upcoming", "completed", "failed"]
+        enum: ["Upcoming", "Completed", "Failed"]
     }
 })
 

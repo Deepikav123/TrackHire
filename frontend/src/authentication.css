@@ -7,10 +7,12 @@
 .authetication-page {
     display: flex;
 }
+
 .authentication-left-section .authentication-logo {
     color: white;
 
 }
+
 .authentication-left-section {
     flex: 4;
     display: flex;
@@ -28,42 +30,51 @@
 .authentication-left-section {
     flex: 2.5;
 }
+
 .authentication-right-section {
     flex: 7.5;
 }
-.trackHire-text-info1{
+
+.trackHire-text-info1 {
     margin: 7px 0px;
     text-align: center;
 }
-.trackHire-text-info2{
+
+.trackHire-text-info2 {
     text-align: center;
 }
 
 /* Right Section */
-.authentication-right-section{
+.authentication-right-section {
     padding: 20px;
     display: flex;
     justify-content: center;
 }
-.auth-form-heading{
+
+.auth-form-heading {
     margin: 10px 0px;
 }
-.authentication-form-section{
+
+.authentication-form-section {
     margin: 20px 0px;
 }
-.authForm-subSection{
+
+.authForm-subSection {
     margin: 20px 0px;
 }
-.authForm-inputHeading{
+
+.authForm-inputHeading {
     margin: 10px 0px;
     font-weight: bold;
 }
-.authForm-input{
+
+.authForm-input {
     width: 300px;
     padding: 10px;
     border: 1px solid gray;
     border-radius: 10px;
 }
+
 /* .forgot-password{
     display: flex;
     justify-content: end;
@@ -75,49 +86,56 @@
     cursor: pointer;
 } */
 
-.auth-form-headings{
+.auth-form-headings {
     margin-bottom: 50px;
 }
-.authentication-form-buttons{
+
+.authentication-form-buttons {
     margin: 10px 0px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.auth-button{
-flex: 1;
-padding: 8px;
-border: none;
-border-radius: 10px;
-font-weight: bold;
-
+.auth-button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
 }
-.auth-mode{
-        background-color: #8266f3;
-color: white;
 
+.auth-mode {
+    background-color: #8266f3;
+    color: white;
 }
+.auth-mode:hover {
+    box-shadow: 0px 0px 2px gray;
+    cursor:pointer;
+}
+
 /* .google{
     border: 1px solid gray;
 
 } */
-.auth-button-option{
+.auth-button-option {
     text-align: center;
     font-size: small;
 }
-.auth-suggestion{
+
+.auth-suggestion {
     color: rgb(72, 72, 181);
     font-weight: bold;
     cursor: pointer;
-    background-color: none;
+    background: none;
     border: none;
 }
-.auth-suggestion-section{
+
+.auth-suggestion-section {
     text-align: center;
 }
 
-.error-message{
+.error-message {
     padding: 10px 5px;
     margin: 10px 0px;
     color: red;
@@ -126,13 +144,15 @@ color: white;
     font-weight: bold;
     background-color: rgb(255, 209, 209);
 }
-.error-icon{
+
+.error-icon {
     background-color: red;
     padding: 3px 10px;
     color: white;
     border-radius: 20px;
 }
+
 .required-star {
-  color: #dc4545;
-  margin-left: 2px;
+    color: #dc4545;
+    margin-left: 2px;
 }

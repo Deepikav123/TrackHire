@@ -2,6 +2,9 @@ import { TitleAndSubline, SubHeading } from "../bodyTitle";
 import { SummaryCard, RecentApplicationCard } from "./dashboardCards";
 import applicationIcon from '../../../images/icons/application.png'
 import inProgressIcon from '../../../images/icons/inProgress.png'
+import interviewIcon from '../../../images/icons/interviews.png'
+import offerIcon from '../../../images/icons/offer.png'
+import rejectedIcon from '../../../images/icons/rejected.png'
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import AuthContext from "../../../../context/authContext";
@@ -33,23 +36,23 @@ function Dashboard() {
          
             const progressCount = data.filter(application => {
                 const lastStage = application.stage[application.stage.length - 1];
-                return lastStage && lastStage.status != 'failed'
+                return lastStage && lastStage.status != 'Failed'
             })
             // Interviews
             const interviewCount = data.filter((application) => {
                 const lastStage = application.stage[application.stage.length - 1];
-                return lastStage && lastStage.name.includes("interview") && lastStage.status == 'upcoming'
+                return lastStage && lastStage.name.includes("interview") && lastStage.status == 'Upcoming'
             })
 
             // Selected
             const offerCount = data.filter((application) => {
                 const lastStage = application.stage[application.stage.length - 1];
-                return lastStage && lastStage.name == 'selected'
+                return lastStage && lastStage.name == 'Selected'
             })
             // Rejected
             const rejectCount = data.filter((application) => {
                 const lastStage = application.stage[application.stage.length - 1];
-                return lastStage && lastStage.status == 'failed'
+                return lastStage && lastStage.status == 'Failed'
             })
 
             setSummary(prev => ({
@@ -80,19 +83,19 @@ function Dashboard() {
             detail: "Actively moving forward"
         },
         {
-            icon: applicationIcon,
+            icon: interviewIcon,
             title: "Interviews",
             quantity: summary.interview,
             detail: "Upcoming Interviews"
         },
         {
-            icon: applicationIcon,
+            icon: offerIcon,
             title: "Offers",
             quantity: summary.offer,
             detail: "Yay! Keep it up"
         },
         {
-            icon: applicationIcon,
+            icon: rejectedIcon,
             title: "Rejected",
             quantity: summary.rejection,
             detail: "Don't give up"

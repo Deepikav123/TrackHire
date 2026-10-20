@@ -77,12 +77,12 @@ function Application() {
     }
 
     function PipelineStage({ stage }) {
-       
+
         return (
             <>
                 {stage.map(s => (
                     <div className="pipeline-stage" >
-                        <img src={s.status == "completed" ? completed : s.status == "upcoming" ? upcoming : failed} alt="" className="indication-circle" />
+                        <img src={s.status == "Completed" ? completed : s.status == "Upcoming" ? upcoming : failed} alt="" className="indication-circle" />
                         {/* <span className="indication-circle">{s.status == "completed" ? '🟢' : s.status == "upcoming" ? '🟡' : '🔴'}</span> */}
                         {/* <div className="stage-detail"> */}
                         <div className="stage-name" >
@@ -118,6 +118,7 @@ function Application() {
         })
         const data = await response.json();
         if (!response.ok) {
+            console.log(data);
             setFormErrMessage(data.message);
             return;
         }
@@ -145,12 +146,17 @@ function Application() {
         })
 
         if (response.ok) {
-            setApplications(prev =>
-                prev.filter((application) => application._id !== id)
-            )
-            setSelectedApplication(applications[applications.length - 1]);
+            const updatedApplications = applications.filter((application) => application._id !== id)
+            
+            setApplications(updatedApplications);
+            setSelectedApplication(
+                updatedApplications.length > 0
+                    ? updatedApplications[updatedApplications.length - 1]
+                    : null
+            );
         }
         else {
+            console.log(response.json());
             alert("Failed to delete application.");
         }
     }
@@ -177,6 +183,13 @@ function Application() {
                                 <div className="pipeline-title">Application Pipeline</div>
                                 <div className="edit-and-delete">
                                     <button className="applicationEdit" onClick={() => {
+                                        if (!selectedApplication) return;
+
+                                        setSelectedStageId(
+                                            selectedApplication.stage[0]?._id || ""
+                                        );
+
+                                        setFormErrMessage("");
                                         setModal(true)
                                     }}><img src={edit} alt="" className='editIcon' /></button>
                                     <button className="applicationDelete" onClick={() => {
@@ -226,40 +239,45 @@ function Application() {
                                 }} />
                                 <div className="modal-form-subsection">
                                     <h4 className="modal-form-subheading">Recruitment Stage <span className="required-star" >*</span></h4>
-                                    <select name="" id="" className='modal-form-input select-stage' onChange={(e) => setSelectedStageId(e.target.value)
-
-
-                                    }>
-                                        {selectedApplication.stage.toReversed().map(s => (
-                                            <option value={s._id} key={s._id}>{s.name}</option>
-
-                                        )
-                                        )
-
-                                        }
+                                    <select
+                                        className="modal-form-input select-stage"
+                                        value={selectedStageId}
+                                        onChange={(e) => {
+                                            setSelectedStageId(e.target.value);
+                                            setFormErrMessage("");
+                                        }}
+                                    >
+                                        {selectedApplication.stage.map(s => (
+                                            <option value={s._id} key={s._id}>
+                                                {s.name}
+                                            </option>
+                                        ))}
                                     </select>
-
                                 </div>
 
                                 <div className="modal-form-subsection">
                                     <h4 className="modal-form-subheading">Recruitment Status <span className="required-star" >*</span></h4>
-                                    <select name="" id="" className='modal-form-input select-stage' value={selectedStage?.status || ""} onChange={(e) => {
-                                        setSelectedApplication(prev => ({
-                                            ...prev,
-                                            stage: prev.stage.map((s) =>
-                                                s._id == selectedStageId ?
-                                                    {
-                                                        ...s,
-                                                        status: e.target.value
-                                                    } : s
+                                    <select
+                                        className="modal-form-input select-stage"
+                                        value={selectedStage?.status || ""}
+                                        onChange={(e) => {
+                                            const status = e.target.value;
 
-                                            )
-                                        })
-                                        )
-                                    }}>
-                                        <option value="upcoming">Upcoming</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="failed">Failed</option>
+                                            setSelectedApplication(prev => ({
+                                                ...prev,
+                                                stage: prev.stage.map(s =>
+                                                    s._id === selectedStageId
+                                                        ? { ...s, status }
+                                                        : s
+                                                )
+                                            }));
+
+                                            setFormErrMessage("");
+                                        }}
+                                    >
+                                        <option value="Upcoming">Upcoming</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="Failed">Failed</option>
                                     </select>
 
                                 </div>
@@ -272,7 +290,7 @@ function Application() {
                                                 jobtype: e.target.value
                                             }
                                         }
-                                        
+
                                     )
                                     setFormErrMessage("");
 

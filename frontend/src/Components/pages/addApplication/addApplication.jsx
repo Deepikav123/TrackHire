@@ -28,7 +28,7 @@ function AddApplication() {
             role: "",
             stage: {
                 name: "",
-                status: "upcoming"
+                status: "Upcoming"
             },
             jobtype: "",
             location: "",
@@ -87,7 +87,7 @@ function AddApplication() {
                                     ...Prev,
                                     stage: {
                                         name: e.target.value,
-                                        status: e.target.value == "shortListed" || e.target.value == "selected" ? "completed" : e.target.value == "rejected" ? "failed" : "upcoming"
+                                        status: e.target.value == "shortListed" || e.target.value == "Selected" ? "Completed" : e.target.value == "Rejected" ? "failed" : "Upcoming"
                                     }
 
                                 })

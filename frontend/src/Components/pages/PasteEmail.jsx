@@ -75,7 +75,7 @@ function PasteEmail() {
             jobtype: data.jobtype,
             stage: {
                 name: data.stage,
-                status: data.stage == "Shortlisted" || data.stage == "Selected" ? "completed" : data.stage == "Rejected" ? "failed" : "upcoming"
+                status: data.stage == "Shortlisted" || data.stage == "Selected" ? "Completed" : data.stage == "Rejected" ? "Failed" : "Upcoming"
             }
         })
 
@@ -186,7 +186,7 @@ function PasteEmail() {
                                                 stage: {
 
                                                     name: e.target.value,
-                                                    status: "upcoming"
+                                                    status: "Upcoming"
                                                 }
                                             }
                                         }

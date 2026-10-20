@@ -143,10 +143,10 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
 
 function Login() {
 
-    return <AuthForm mode="Login" heading="Welcome Back" subheading="Sign in to your account to access" buttonFunction="" />
+    return <AuthForm mode="Login" heading="Welcome Back" subheading="Sign in to your account to access" />
 }
 function Register() {
-    return <AuthForm mode="Register" heading="Create your account" subheading="It only takes a minute" buttonFunction="" />
+    return <AuthForm mode="Register" heading="Create your account" subheading="It only takes a minute"/>
 }
 
 

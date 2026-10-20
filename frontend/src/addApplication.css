@@ -57,6 +57,13 @@
 
 }
 
+.application-cancel-button:hover{
+    box-shadow: 0px 0px 4px gray;
+}
+.application-save-button:hover{
+    box-shadow: 0px 0px 4px gray;
+}
+
 .recruitment-headings {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -110,6 +117,9 @@ flex-direction: column;
 
 .application-cancel-button{
 padding: 10px;
+border-radius: 10px;
+border: 2px solid gray;
+cursor: pointer;
 }
 .application-save-button{
 padding: 10px;
@@ -117,6 +127,10 @@ padding: 10px;
    color: #FFFFFF;
    border: none;
    font-weight: bold;
+border-radius: 10px;
+cursor: pointer;
+
+
 }
 .addApplication-error,.pasteEmail-error{
     color: red;

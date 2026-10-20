@@ -56,7 +56,7 @@ async function createApplication(req, res) {
             ]
         })
         if (applicationFilter) {
-            applicationFilter.stage[applicationFilter.stage.length - 1].status = "completed"
+            applicationFilter.stage[applicationFilter.stage.length - 1].status = "Completed"
             applicationFilter.stage.push(applicationData.stage);
             await applicationFilter.save();
             res.json(applicationFilter)
