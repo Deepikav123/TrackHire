@@ -31,7 +31,7 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
 
     async function submitRegisterForm(e) {
         e.preventDefault();
-        const response = await fetch("http://localhost:3000/api/auth/register",
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`,
             {
                 method: "POST",
                 headers: {
@@ -43,7 +43,7 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
         )
 
         const data = await response.json();
-        if(!response.ok){
+        if (!response.ok) {
             setErrMessage(data.message);
             return;
         }
@@ -54,7 +54,7 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
 
     async function submitLoginForm(e) {
         e.preventDefault();
-        const response = await fetch("http://localhost:3000/api/auth/login",
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`,
             {
                 method: "POST",
                 headers: {
@@ -68,7 +68,7 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
             setErrMessage(data.message);
             return;
         }
-
+        localStorage.setItem("token", data.token);
         setToken(data.token);
         navigate('/trackhire/app/dashboard');
     }
@@ -146,7 +146,7 @@ function Login() {
     return <AuthForm mode="Login" heading="Welcome Back" subheading="Sign in to your account to access" />
 }
 function Register() {
-    return <AuthForm mode="Register" heading="Create your account" subheading="It only takes a minute"/>
+    return <AuthForm mode="Register" heading="Create your account" subheading="It only takes a minute" />
 }
 
 

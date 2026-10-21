@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 function FormInputText({ subheading, placeholder,onChange,value,required }) {
     return (
         <div className="form-subsection">
@@ -39,9 +40,15 @@ function FormInputTextarea({ subheading, placeholder,onChange,value}) {
         </div>
     )
 }
-function FormInputButton({text,ButtonClassName}){
+function FormInputButton({text,ButtonClassName,type}){
+    const navigate=useNavigate();
+    function handleClick(){
+        if(type==='button'){
+              navigate("/trackhire/app/application");
+        }
+    }
     return (
-            <button  className={ButtonClassName}>{text}</button>
+            <button  className={ButtonClassName} type={type} onClick={handleClick}>{text}</button>
     )
 }
 
@@ -51,7 +58,7 @@ function RecruitmentPipeline({stage,optionArray}){
             <div className="recruitment-stage">{stage}</div>
             <select className="recruitment-status">
                 {optionArray.map((opt)=>(
-                    <option value={opt}>{opt}</option>
+                    <option key={opt} value={opt}>{opt}</option>
                 ))}
             </select>
             <input type="date" className="recruitment-date" />

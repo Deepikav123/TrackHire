@@ -10,7 +10,7 @@ function extractCompany1(name) {
 }
 
 function extractCompany2(data2, data1) {
-    if(data1){
+    if (data1) {
         let newData1 = normalize(data1);
         let newData2 = normalize(data2);
         if (newData2.includes(newData1)) {
@@ -70,9 +70,13 @@ function jobType(data) {
 // Stages
 
 function stage(data) {
-    const newData = normalize(data);
+    const stageData = data.replace(
+        /\n\s*(?:regards|best regards|kind regards|warm regards|sincerely|thanks|thank you)[,!\s]*[\s\S]*$/i,
+        ""
+    ).trim();
+    const newData = normalize(stageData);
     const shortListed = ["shortlisted", "nextround", "nextstage"];
-    const technicalInterview = ["interview", "technicalinterview"];
+    const technicalInterview = ["interview", "technicalinterview","technical"];
     const hrInterview = ["hr"];
     const rejected = ["rejected", "unabletomoveforward", "othercandidates", "profileinfile", "futureroles", "sorry", "apologize"];
     const selected = ["selected", "offerletter"];
@@ -82,11 +86,7 @@ function stage(data) {
     ))) {
         return "Rejected";
     }
-    else if (selected.some(word => (
-        newData.includes(word)
-    ))) {
-        return "Selected";
-    }
+
     else if (hrInterview.some(word => (
         newData.includes(word)
     ))) {
@@ -96,6 +96,11 @@ function stage(data) {
         newData.includes(word)
     ))) {
         return "Technical Interview";
+    }
+    else if (selected.some(word => (
+        newData.includes(word)
+    ))) {
+        return "Selected";
     }
     else if (shortListed.some(word => (
         newData.includes(word)

@@ -6,7 +6,7 @@ import reminderIcon from '../../images/icons/notification.png'
 // import analyticsIcon from '../../images/icons/analytics.png'
 import Logo from '../../images/trackHire.png'
 import profileImage from '../../images/profile.png'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../../context/authContext'
 function SidebarItems({ to, name, icon }) {
@@ -20,9 +20,11 @@ function SidebarItems({ to, name, icon }) {
 }
 
 function SideNavbar() {
+    const navigate = useNavigate();
+    const { setToken } = useContext(AuthContext);
+
     return (
         <div className="sideNavbar">
-
 
             <div className="logo">
                 <img src={Logo} className="trackHire-logo" />
@@ -45,27 +47,52 @@ function SideNavbar() {
                 <NavLink to='pasteEmail' className={({ isActive }) =>
                     isActive ? "paste-email-button active" : "paste-email-button"} ><span className="email-plus-sign">+ </span>Paste Email </NavLink>
             </div>
+            <div className="logout">
+                <button className="logout-button" onClick={() => {
+                    localStorage.removeItem("token");
+                    setToken(null);
+                    navigate('/trackhire/authentication/login');
+                }}>Logout</button>
+
+            </div>
+
         </div>
     )
 }
 
 function TopNavbar() {
-    const { token } = useContext(AuthContext);
+    const { token, setToken } = useContext(AuthContext);
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchUser() {
-            const response = await fetch("http://localhost:3000/api/auth/user", {
+            if (!token) {
+                setUser(null);
+                return;
+            }
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/user`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             })
             const data = await response.json();
+             if (response.status === 401) {
+                    localStorage.removeItem("token");
+                    setToken(null);
+                    navigate("/trackhire/authentication/login", {
+                        replace: true
+                    });
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch user");
+                }
             setUser(data);
-            console.log(data);
         }
-fetchUser();
-    }, [token])
+        fetchUser();
+    }, [token,setToken,navigate])
 
 
     return (
@@ -73,7 +100,7 @@ fetchUser();
             <div className="right-topNavbar">
                 <div className="profile-info">
                     <img src={profileImage} alt="" className="profile-img" />
-                    <span className="profile-user-name">{user?.username||"User"}</span>
+                    <span className="profile-user-name">{user?.username || "User"}</span>
 
                 </div>
             </div>

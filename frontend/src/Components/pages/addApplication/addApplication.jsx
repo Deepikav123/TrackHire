@@ -54,7 +54,7 @@ function AddApplication() {
     }
     async function SubmitForm(e) {
         e.preventDefault();
-        const response = await fetch('http://localhost:3000/api/applications', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/applications`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -103,7 +103,7 @@ function AddApplication() {
                     </div>
                     {errMessage && <div className="addApplication-error"><span className="error-icon">!</span> {errMessage}</div>}
                     <div className="recruitment-pipeline-buttons">
-                        <FormInputButton text="Cancel" ButtonClassName="application-cancel-button" />
+                        <FormInputButton text="Cancel"  ButtonClassName="application-cancel-button" type="button" />
                         <FormInputButton text="Save Application" ButtonClassName="application-save-button" type="submit" />
                     </div>
                 </div>

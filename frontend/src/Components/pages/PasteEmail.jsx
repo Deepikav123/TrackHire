@@ -36,8 +36,10 @@ function PasteEmail() {
                 status: ""
             },
             applicationDate: "",
+            applicationTime:"",
             jobtype: "",
-            location: ""
+            location: "",
+            meetingLink:""
         }
     )
 
@@ -50,7 +52,7 @@ function PasteEmail() {
 
     async function analyzeEmail(e) {
         e.preventDefault();
-        const response = await fetch('http://localhost:3000/api/email/analyze', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/email/analyze`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -62,6 +64,7 @@ function PasteEmail() {
             })
         });
         const data = await response.json();
+
         if (!response.ok) {
             setErrMessage(data.message);
             return;
@@ -71,12 +74,14 @@ function PasteEmail() {
             company: capitalizeFirstLetter(data.company),
             role: capitalizeFirstLetter(data.role),
             applicationDate: data.date,
+            applicationTime:data.time,
             location: "",
             jobtype: data.jobtype,
             stage: {
                 name: data.stage,
                 status: data.stage == "Shortlisted" || data.stage == "Selected" ? "Completed" : data.stage == "Rejected" ? "Failed" : "Upcoming"
-            }
+            },
+            meetingLink:data.meetingLink
         })
 
     }
@@ -84,7 +89,7 @@ function PasteEmail() {
     async function PassMailData(e) {
         e.preventDefault();
 
-        const response = await fetch('http://localhost:3000/api/applications',
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/applications`,
             {
                 method: "POST",
                 headers: {
@@ -203,6 +208,16 @@ function PasteEmail() {
                                         }
                                     )
                                 }} />
+                                <ModalInputText subheading="Application Time" required={false} value={extractedData.applicationTime} onChange={(e) => {
+                                    setExtractedData(
+                                        Prev => {
+                                            return {
+                                                ...Prev,
+                                                applicationTime: e.target.value
+                                            }
+                                        }
+                                    )
+                                }} />
 
                                 <ModalInputText subheading="Job Type" required={false} value={extractedData.jobtype} onChange={(e) => {
                                     setExtractedData(
@@ -210,6 +225,16 @@ function PasteEmail() {
                                             return {
                                                 ...Prev,
                                                 jobtype: e.target.value
+                                            }
+                                        }
+                                    )
+                                }} />
+                                <ModalInputText subheading="Meeting Link" required={false} value={extractedData.meetingLink} onChange={(e) => {
+                                    setExtractedData(
+                                        Prev => {
+                                            return {
+                                                ...Prev,
+                                                meetingLink: e.target.value
                                             }
                                         }
                                     )

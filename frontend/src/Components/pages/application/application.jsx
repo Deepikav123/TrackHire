@@ -27,7 +27,7 @@ function Application() {
     useEffect(() => {
         async function fetchApplication() {
 
-            const response = await fetch('http://localhost:3000/api/applications', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/applications`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -108,7 +108,7 @@ function Application() {
     async function editApplication(id) {
 
 
-        const response = await fetch(`http://localhost:3000/api/applications/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/applications/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -118,7 +118,6 @@ function Application() {
         })
         const data = await response.json();
         if (!response.ok) {
-            console.log(data);
             setFormErrMessage(data.message);
             return;
         }
@@ -137,7 +136,7 @@ function Application() {
         if (!alertNotification) {
             return;
         }
-        const response = await fetch(`http://localhost:3000/api/applications/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/applications/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -156,7 +155,6 @@ function Application() {
             );
         }
         else {
-            console.log(response.json());
             alert("Failed to delete application.");
         }
     }

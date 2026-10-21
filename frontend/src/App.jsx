@@ -6,25 +6,32 @@ import PasteEmail from "./Components/pages/PasteEmail"
 import {AddApplication} from "./Components/pages/addApplication/addApplication"
 import Authentication from "./Components/Authentication/authentication"
 import {Login,Register} from "./Components/Authentication/authenticationForm"
+import ProtectedRoute from "./Components/pages/ProtectedRoute"
 import './dashboard.css'
 import './application.css'
 import './authentication.css'
+import { useContext } from "react"
+import AuthContext from "../context/authContext"
+
 
 function App() {
+  const { token } = useContext(AuthContext);
   return (
     <BrowserRouter>
       <Routes>
      <Route path="/trackhire" >
-     <Route path="authentication" element={<Authentication />}>
+     <Route path="authentication" element={<Authentication/>}>
      <Route path="login" element={<Login/>}/>
      <Route path="register" element={<Register/>}/>
      </Route>
 
      <Route path="app" element={<TrackHireLayout/>}>
+     <Route element={<ProtectedRoute tokenData={token}/>}>
      <Route path="dashboard" element={<Dashboard/>}/>
      <Route path="application" element={<Application/>}/>
      <Route path="addApplication" element={<AddApplication/>}/>
      <Route path="pasteEmail" element={<PasteEmail/>}/>
+     </Route>
      </Route>
      </Route>
       </Routes>

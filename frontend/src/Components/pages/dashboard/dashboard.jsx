@@ -8,8 +8,8 @@ import rejectedIcon from '../../../images/icons/rejected.png'
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import AuthContext from "../../../../context/authContext";
+import ProtectedRoute from "../ProtectedRoute";
 function Dashboard() {
-
     const { token } = useContext(AuthContext);
     const [applications, setApplications] = useState([]);
 
@@ -23,14 +23,18 @@ function Dashboard() {
         }
     )
 
+
     useEffect(() => {
         async function fetchApplication() {
-            const response = await fetch('http://localhost:3000/api/applications', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/applications`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
             const data = await response.json();
+            if(!response.ok){
+                return;
+            }
             setApplications(data);
             // In-Progress
          
@@ -41,7 +45,7 @@ function Dashboard() {
             // Interviews
             const interviewCount = data.filter((application) => {
                 const lastStage = application.stage[application.stage.length - 1];
-                return lastStage && lastStage.name.includes("interview") && lastStage.status == 'Upcoming'
+                return lastStage && lastStage.name.toLowerCase().includes("interview") && lastStage.status === 'Upcoming'
             })
 
             // Selected
