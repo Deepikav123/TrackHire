@@ -10,7 +10,11 @@ const app = express();
 const applicationRouter=require("./routes/applicationRoutes");
 const emailRouter=require("./routes/emailRoutes");
 const authRouter=require("./routes/authRoutes");
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json());
 app.get("/", (req, res) => {
     res.send("TrackHire backend is running");
