@@ -31,7 +31,7 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
 
     async function submitRegisterForm(e) {
         e.preventDefault();
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`,
+        const response = await fetch(`https://trackhire-backend-ghu7.onrender.com/api/auth/register`,
             {
                 method: "POST",
                 headers: {

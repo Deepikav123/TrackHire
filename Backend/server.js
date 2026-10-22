@@ -12,6 +12,9 @@ const emailRouter=require("./routes/emailRoutes");
 const authRouter=require("./routes/authRoutes");
 app.use(cors());
 app.use(express.json());
+app.get("/", (req, res) => {
+    res.send("TrackHire backend is running");
+});
 
 app.use("/api/applications",authMiddleware,applicationRouter);
 app.use("/api/email",emailRouter);
