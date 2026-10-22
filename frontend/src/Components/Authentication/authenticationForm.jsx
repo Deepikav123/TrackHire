@@ -74,6 +74,7 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
     }
 
     return (
+        
         <form className="auth-form" onSubmit={mode == "Register" ? submitRegisterForm : submitLoginForm} >
             <div className="auth-form-headings">
                 <h1 className="auth-form-heading">

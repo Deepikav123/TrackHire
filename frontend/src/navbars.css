@@ -1,3 +1,6 @@
+/* * {
+    box-sizing: border-box;
+} */
 body {
     background-color: #F7F8F7;
 }
@@ -5,6 +8,7 @@ body {
 .layouts {
     display: flex;
     gap: 10px;
+    min-height: 100vh;
 }
 
 /* Side Navbar */
@@ -24,8 +28,8 @@ body {
 
 
 .trackHire-logo {
-    height: 80px;
-    width: 160px;
+    height: 100px;
+    width: 150px;
 }
 
 .logo {
@@ -137,13 +141,16 @@ body {
     color: white;
     box-shadow: 0px 0px 2px gray;
 }
+.menu-toggle {
+    display: none;
+}
 
 /* Top Navbar */
 .topNavbar {
     background-color: #FFFFFF;
     height: 70px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     box-shadow: 0px 0px 2px gray;
     align-items: center;
     padding: 3px 30px;
@@ -151,6 +158,11 @@ body {
     top: 3px;
 }
 
+.trackHire1-logo{
+    height: 20px;
+    width: 100px;
+    display: none;
+}
 .profile-img {
     height: 35px;
     border-radius: 30px;
@@ -179,5 +191,73 @@ body {
     flex-direction: column;
     gap: 15px;
     flex: 1;
+    min-width: 0;
+    /* padding: 10px; */
 }
 
+@media (max-width: 600px) {
+.layouts{
+    gap: 0;
+}
+.sideNavbar{
+    position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100vh;
+        height: 100dvh;
+        padding: 15px;
+        gap: 20px;
+        z-index: 1001;
+        overflow-y: auto;
+        transform: translateX(-100%);
+        visibility: hidden;
+        transition: transform 0.25s ease, visibility 0.25s;
+}
+ .sideNavbar.open {
+        transform: translateX(0);
+        visibility: visible;
+    }
+      .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+    }
+    .trackHire1-logo{
+        display: initial;
+    }
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        padding: 5px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+      .topNavbar {
+        justify-content: space-between;
+        height: 60px;
+        padding: 3px 12px;
+        top: 0;
+        z-index: 999;
+    }
+  .right-topNavbar {
+        gap: 10px;
+    }
+    .topNavbar-menu{
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+
+    .profile-img {
+        height: 30px;
+    }
+
+    .profile-user-name {
+        font-size: 13px;
+    }
+}

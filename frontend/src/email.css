@@ -61,9 +61,12 @@ font-weight: bold;
 }
 .modal{
     width: 500px;
-    padding: 20px;
+    max-width: calc(100% - 32px);
+    max-height: 85vh;
+    overflow-y: auto;
+    box-sizing: border-box;
     background-color: white;
-    margin: 100px auto;
+    padding: 20px;
     
 
 }
@@ -81,10 +84,11 @@ font-weight: bold;
 
 .modal-body{
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     padding: 20px;
 }
+
 /* Modal Buttons */
 .modal-buttons{
     display: flex;
@@ -99,6 +103,14 @@ font-weight: bold;
     font-weight: bold;
 
 }
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
 .modal-cancel{
     color: white;
     background-color: gray;
@@ -107,4 +119,44 @@ font-weight: bold;
     color: white;
      background-color:  #7e5ffd;
 
+}
+
+@media (max-width: 600px) {
+    .email-importBox,
+    .sender-data {
+        margin: 8px;
+        padding: 10px;
+    }
+
+    .email-buttons {
+        margin: 12px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .email-button {
+        padding: 10px 14px;
+        text-align: center;
+    }
+
+    .modal {
+        width: 100%;
+        max-width: calc(100% - 24px);
+        max-height: 85vh;
+        padding: 14px;
+    }
+
+    .modal-body {
+        grid-template-columns: 1fr;
+        padding: 12px 0;
+        gap: 12px;
+    }
+
+    .modal-buttons {
+        flex-wrap: wrap;
+    }
+
+    .modal-button {
+        padding: 10px 12px;
+    }
 }

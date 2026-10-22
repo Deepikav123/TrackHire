@@ -1,98 +1,104 @@
-/* .application-cards-section{
-    display: flex;
-    flex-direction: column;
-    margin: 20px 0px;
-    gap: 10px;
-} */
-/* .application-cards-title{
-    font-weight: bold;
-    
-} */
-.application-card{
+.application-card {
     display: grid;
-    grid-template-columns: 1fr 1fr 1.4fr 40px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr) 40px;
     background-color: #FFFFFF;
     padding: 10px;
-    box-shadow: 0px 0px 2px gray;
-border-radius: 10px;
-align-items: center;
-gap:15px;
+    box-shadow: 0 0 2px gray;
+    border-radius: 10px;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
 
 }
-.application-cards-section{
-    margin: 15px 0px;
-    display: flex;
-   
-    gap: 10px;
+
+.application-card>* {
+    min-width: 0;
 }
-.application-date-sideHeading{
+
+.application-cards-section {
+    margin: 15px 0;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    min-width: 0;
+}
+
+.application-date-sideHeading {
     font-size: small;
     color: rgb(83, 83, 83);
     font-weight: bold;
 }
+
 /* .application-cards-title{
     background-color: #FFFFFF;
     padding: 10px;
     box-shadow: 0px 0px 2px gray;
 border-radius: 10px;
 } */
-.application-cards-data{
+.application-cards-data {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    flex: 6.5;
+
 }
-.application-role{
+
+.application-role {
     font-weight: bold;
     font-size: large;
 }
-.application-companyName{
+
+.application-companyName {
     color: rgb(57, 56, 56);
 
 }
-.application-more{
+
+.application-more {
     font-size: x-large;
     border: none;
     background-color: #FFFFFF;
     padding: 0px;
     cursor: pointer;
 }
- .application-cards-data{
-    flex: 6.5;
- }
 
-.application-pipeline{
+.application-pipeline {
     background-color: #FFFFFF;
     flex: 3.5;
+    min-width: 0;
     padding: 10px;
-     box-shadow: 0px 0px 2px gray;
-border-radius: 10px;
-position: sticky;
-    height: 400px;
+    box-shadow: 0 0 2px gray;
+    border-radius: 10px;
+    position: sticky;
     top: 90px;
+    min-height: 400px;
+    height: fit-content;
     display: flex;
+    /* flex-direction: column; */
     gap: 10px;
+
 }
 
 /* Pipeline */
-.application-company-icon{
+.application-company-icon {
     height: 40px;
 }
 
-.pipeline-companyTitle{
+.pipeline-companyTitle {
     font-size: larger;
     font-weight: bold;
     margin: 10px 0px;
-  
+
 }
 
-.pipeline-title{
-font-weight: bold;
+.pipeline-title {
+    font-weight: bold;
 }
 
-.pipeline-section{
+.pipeline-section {
     padding: 10px 0px;
 }
-.pipeline-stage{
+
+.pipeline-stage {
     display: flex;
     gap: 10px;
     padding: 10px 5px;
@@ -100,29 +106,128 @@ font-weight: bold;
     box-shadow: 0px 0px 3px gray;
     border-radius: 10px;
 }
-.indication-circle{
-height: 25px;
+
+.indication-circle {
+    height: 25px;
 }
 
-.applicationEdit,.applicationDelete{
+.applicationEdit,
+.applicationDelete {
     background-color: white;
     border: none;
 }
-.editIcon,.deleteIcon{
+
+.editIcon,
+.deleteIcon {
     height: 25px;
-box-shadow: 0px 0px 3px gray;
-cursor: pointer;
+    box-shadow: 0px 0px 3px gray;
+    cursor: pointer;
 }
-.pipeline-subHeading-section{
+
+.pipeline-subHeading-section {
     display: flex;
-margin: 35px 0px 0px 0px;
-gap: 10px;
-justify-content: space-between;
-    
+    margin: 35px 0px 0px 0px;
+    gap: 10px;
+    justify-content: space-between;
+
 }
-.select-stage{
+
+.select-stage {
     width: 185px;
 }
-.modal-button:hover{
+
+.modal-button:hover {
     box-shadow: 0px 0px 4px gray;
+}
+
+@media (max-width: 600px) {
+      .application-cards-section {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .application-date-data {
+        font-size: small;
+    }
+
+    .application-card {
+        grid-template-columns: minmax(0, 1fr) 60px;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .application-card>* {
+        min-width: 0;
+    }
+
+    .application-role {
+        font-size: 16px;
+        overflow-wrap: anywhere;
+    }
+
+    .application-companyName {
+        overflow-wrap: anywhere;
+    }
+
+    .application-more {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+     .application-pipeline {
+        position: static;
+        height: auto;
+        min-height: 0;
+    }
+
+    .application-company-icon {
+        height: 32px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .pipeline-stage {
+        gap: 8px;
+        padding: 10px;
+        min-width: 0;
+    }
+
+    .pipeline-subHeading-section {
+        flex-wrap: wrap;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .select-stage {
+        width: 100%;
+        max-width: none;
+    }
+
+    .editIcon,
+    .deleteIcon {
+        height: 22px;
+        max-width: 100%;
+    }
+
+  
+      .application-cards-data,
+    .application-pipeline {
+        width: 100%;
+        flex: none;
+        min-width: 0;
+    }
+
+    .application-pipeline {
+            box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        flex: none;
+        position: static;
+        height: auto;
+        min-height: 0;
+    }
+     
 }

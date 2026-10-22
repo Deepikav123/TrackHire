@@ -1,6 +1,8 @@
 import Logo from '../../images/trackHire.png'
 import Formal from '../../images/authentication.png'
 import { Outlet } from "react-router-dom"
+import Logo1 from "../../images/trackHire-1.png"
+
 
 function LeftSection() {
     return (
@@ -26,12 +28,17 @@ function LeftSection() {
 
 function Authentication(){
     return(
+        <>
+         <header className="auth-mobile-navbar">
+                <img src={Logo1} alt="TrackHire" className='auth-mobile-navbar-logo' />
+            </header>
         <div className="authetication-page">
             <LeftSection/>
             <div className="authentication-right-section">
             <Outlet/>
             </div>
         </div>
+        </>
     )
 }
 

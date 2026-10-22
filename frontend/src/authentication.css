@@ -8,6 +8,11 @@
     display: flex;
 }
 
+.authentication-left-section,
+.authentication-right-section {
+    min-width: 0;
+}
+
 .authentication-left-section .authentication-logo {
     color: white;
 
@@ -69,7 +74,9 @@
 }
 
 .authForm-input {
-    width: 300px;
+     width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
     padding: 10px;
     border: 1px solid gray;
     border-radius: 10px;
@@ -155,4 +162,42 @@
 .required-star {
     color: #dc4545;
     margin-left: 2px;
+}
+
+@media (max-width: 600px) {
+    .authetication-page {
+        min-height: 100vh;
+    }
+
+    .authentication-right-section {
+        padding: 20px 16px;
+        
+    }
+
+    .authentication-form-section {
+        width: 100%;
+        max-width: 340px;
+    }
+
+    .authForm-input {
+        width: 100%;
+        max-width: none;
+    }
+
+    .auth-form-headings {
+        margin-bottom: 24px;
+    }
+    .authentication-left-section {
+        display: none;
+    }
+    .auth-mobile-navbar{
+        /* background-color:#8266f3; */
+        display: flex;
+        align-items: center;
+        padding: 20px 0px;
+    }
+    .auth-mobile-navbar-logo{
+        height: 50px;
+        width: 150px;
+    }
 }
