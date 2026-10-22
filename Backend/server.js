@@ -17,6 +17,8 @@ app.use("/api/applications",authMiddleware,applicationRouter);
 app.use("/api/email",emailRouter);
 app.use("/api/auth",authRouter);
 
-app.listen(3000, () => {
-    console.log("Server is running");
-})
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

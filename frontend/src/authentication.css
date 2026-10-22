@@ -163,7 +163,9 @@
     color: #dc4545;
     margin-left: 2px;
 }
-
+.auth-mobile-navbar{
+    display: none;
+}
 @media (max-width: 600px) {
     .authetication-page {
         min-height: 100vh;
