@@ -1,5 +1,5 @@
 import { TrackHireLayout } from "./Components/layouts/layout"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route,Navigate } from "react-router-dom"
 import { Dashboard } from "./Components/pages/dashboard/dashboard"
 import { Application } from "./Components/pages/application/application"
 import PasteEmail from "./Components/pages/PasteEmail"
@@ -19,6 +19,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route
+        path="/"
+        element={<Navigate to="/trackhire/authentication/login" replace />}
+      />
      <Route path="/trackhire" >
      <Route path="authentication" element={<Authentication/>}>
      <Route path="login" element={<Login/>}/>
