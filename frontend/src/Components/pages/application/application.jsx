@@ -94,16 +94,25 @@ function Application() {
             </>)
     }
 
-    function dateConversion(timestamp) {
-
-        const extractedDate = new Date(timestamp).toLocaleDateString("en-IN", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-        });
-
-        return extractedDate;
+   
+function dateConversion(timestamp) {
+    if (!timestamp) {
+        return "Date unavailable";
     }
+
+    const date = new Date(timestamp);
+
+    if (Number.isNaN(date.getTime())) {
+        return "Date unavailable";
+    }
+
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    });
+}
+
 
     async function editApplication(id) {
 
