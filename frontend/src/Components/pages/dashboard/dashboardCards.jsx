@@ -1,15 +1,25 @@
 
- function formatDate(dateValue) {
-         if (!dateValue) {
+function formatDate(dateValue) {
+    if (!dateValue) {
         return "";
     }
-    const date = new Date(dateValue + "T00:00:00");
+
+    const dateString = String(dateValue);
+    const date = /^\d{4}-\d{2}-\d{2}$/.test(dateString)
+        ? new Date(`${dateString}T00:00:00`)
+        : new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) {
+        console.error("Invalid date received:", dateValue);
+        return "Date unavailable";
+    }
 
     return new Intl.DateTimeFormat("en-US", {
         day: "numeric",
         month: "long"
     }).format(date);
 }
+
 function SummaryCard({ icon, title, quantity, detail }) {
     return (<div className="summary-card">
         <img src={icon} alt="" className="summary-card-icon-img" />
