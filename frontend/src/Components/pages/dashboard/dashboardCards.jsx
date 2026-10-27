@@ -46,7 +46,7 @@ function RecentApplicationCard({ role, company, date,stage,status,key }) {
             </div>
 
                 <div className="recentApplication-stage">{stage}</div>
-                <div className="recentApplication-status">{status}</div>
+                <div className={`recentApplication-status-${status}`}>{status}</div>
                 <div className="recentApplication-date">{formatDate(date)}</div>
         </div>
     )

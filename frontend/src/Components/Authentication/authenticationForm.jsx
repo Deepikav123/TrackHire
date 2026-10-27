@@ -27,6 +27,9 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
         confirmPassword: ""
     })
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [showWakeupMessage, setShowWakeupMessage] = useState(false);
+
 
 
     async function submitRegisterForm(e) {
@@ -54,6 +57,12 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
 
     async function submitLoginForm(e) {
         e.preventDefault();
+        setIsLoading(true);
+        setShowWakeupMessage(false);
+        const timer = setTimeout(() => {
+            setShowWakeupMessage(true);
+        }, 3000);
+
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`,
             {
                 method: "POST",
@@ -70,11 +79,14 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
         }
         localStorage.setItem("token", data.token);
         setToken(data.token);
+        clearTimeout(timer);
+        setIsLoading(false);
+        setShowWakeupMessage(false);
         navigate('/trackhire/app/dashboard');
     }
 
     return (
-        
+
         <form className="auth-form" onSubmit={mode == "Register" ? submitRegisterForm : submitLoginForm} >
             <div className="auth-form-headings">
                 <h1 className="auth-form-heading">
@@ -125,7 +137,7 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
                 }} value={authenticationData.confirmPassword} autoComplete="new-password" />}
             </div>
             <div className="authentication-form-buttons">
-                <button className="auth-button auth-mode" type="submit">{mode}</button>
+                <button className="auth-button auth-mode" type="submit" disabled={isLoading}>{mode}</button>
                 {/* <div className="auth-button-option">OR</div>
                 <button className="auth-button google">Continue with Google</button> */}
             </div>
@@ -138,6 +150,20 @@ function AuthForm({ mode, heading, subheading, buttonFunction }) {
 
                 }>{mode == "Login" ? " Register" : " Login"}</button>
             </div>
+
+            {isLoading && (
+                <div className="login-loading">
+                    <div className="loading-spinner"></div>
+
+                    <h3>Connecting to TrackHire...</h3>
+
+                    <p>
+                        {showWakeupMessage
+                            ? "The server may be waking up after being inactive. This can take up to a minute. Please wait."
+                            : "Please wait while we securely sign you in."}
+                    </p>
+                </div>
+            )}
         </form>
     )
 }

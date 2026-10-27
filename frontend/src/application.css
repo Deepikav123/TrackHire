@@ -53,6 +53,9 @@ border-radius: 10px;
 
 }
 
+.application-cardselected{
+    background-color: pink;
+}
 .application-more {
     font-size: x-large;
     border: none;
@@ -157,6 +160,7 @@ border-radius: 10px;
         gap: 8px;
         padding: 12px;
     }
+
 
     .application-card>* {
         min-width: 0;

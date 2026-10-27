@@ -76,6 +76,15 @@
     padding: 10px 0px;
     gap: 5px;
 }
+.recentApplication-status-Upcoming{
+    color: rgb(36, 104, 163);
+}
+.recentApplication-status-Completed{
+    color: green;
+}
+.recentApplication-status-Failed{
+    color: red;
+}
 
 .recent-application-card {
      display: grid;

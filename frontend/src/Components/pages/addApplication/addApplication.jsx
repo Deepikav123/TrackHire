@@ -87,7 +87,7 @@ function AddApplication() {
                                     ...Prev,
                                     stage: {
                                         name: e.target.value,
-                                        status: e.target.value == "shortListed" || e.target.value == "Selected" ? "Completed" : e.target.value == "Rejected" ? "failed" : "Upcoming"
+                                        status: e.target.value == "ShortListed" || e.target.value == "Selected" ? "Completed" : e.target.value == "Rejected" ? "Failed" : "Upcoming"
                                     }
 
                                 })

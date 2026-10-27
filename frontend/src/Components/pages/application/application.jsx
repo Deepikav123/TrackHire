@@ -14,7 +14,6 @@ function Application() {
 
     const [modal, setModal] = useState(false);
     const [selectedStageId, setSelectedStageId] = useState("");
-    const [newStatus, setNewStatus] = useState("");
     const [applications, setApplications] = useState([]);
     const [selectedApplication, setSelectedApplication] = useState(null);
     const [formErrMessage, setFormErrMessage] = useState("");
@@ -61,12 +60,14 @@ function Application() {
     function ApplicationCard({ applicationId, company, role, stage, date }) {
 
         return (
-            <div className="application-card" >
+            <div className={`application-card ${
+    selectedApplication?._id === application._id ? "selected" : ""
+  }`} >
                 <div className="company-and-role">
                     <div className="application-role">{role}</div>
                     <div className="application-companyName">{company}</div>
                 </div>
-                <div className="application-stage" >{stage}</div>
+                <div className="application-stage">{stage}</div>
                 <div className="application-date">
                     <div className="application-date-sideHeading">Last Updated</div>
                     <div className="application-date-data">{date}</div>
