@@ -61,7 +61,7 @@ function Application() {
 
         return (
             <div className={`application-card ${
-    selectedApplication?._id === application._id ? "selected" : ""
+    selectedApplication?._id === applications._id ? "selected" : ""
   }`} >
                 <div className="company-and-role">
                     <div className="application-role">{role}</div>
