@@ -40,7 +40,7 @@ const applicationSchema = new mongoose.Schema(
             type: String,
             trim: true
         },
-        link: {
+        meetingLink: {
             type: String,
             trim: true
         },

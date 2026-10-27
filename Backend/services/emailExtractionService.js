@@ -75,8 +75,9 @@ function stage(data) {
         ""
     ).trim();
     const newData = normalize(stageData);
+    const applied=["received","review"];
     const shortListed = ["shortlisted", "nextround", "nextstage"];
-    const technicalInterview = ["interview", "technicalinterview","technical"];
+    const technicalInterview = ["interview", "technicalinterview"];
     const hrInterview = ["hr"];
     const rejected = ["rejected", "unabletomoveforward", "othercandidates", "profileinfile", "futureroles", "sorry", "apologize"];
     const selected = ["selected", "offerletter"];
@@ -107,6 +108,12 @@ function stage(data) {
     ))) {
         return "Shortlisted";
     }
+    else if (applied.some(word => (
+        newData.includes(word)
+    ))) {
+        return "Applied";
+    }
+
 
 
     return "";
